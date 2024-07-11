@@ -1,7 +1,9 @@
 package bitcamp.project3.util;
 
 public class Login {
+  private String id;
   private String name;
+  private boolean isAdmin;
   private static Login loginUser;
 
   private Login() {
@@ -18,12 +20,28 @@ public class Login {
     loginUser = null;
   }
 
+  public String getId() {
+    return id;
+  }
+
+  public void setId(String id) {
+    this.id = id;
+  }
+
   public String getName() {
     return name;
   }
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  public boolean isAdmin() {
+    return isAdmin;
+  }
+
+  public void setAdmin(boolean admin) {
+    isAdmin = admin;
   }
 
   public boolean isLoggedIn() {

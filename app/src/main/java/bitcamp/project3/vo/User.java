@@ -20,6 +20,16 @@ public class User {
     this.id = id;
   }
 
+  public User(String id, String pw, String name, boolean isAdmin, LocalDate joinDate,
+      List<Book> borrowedBookList) {
+    this.id = id;
+    this.pw = pw;
+    this.name = name;
+    this.isAdmin = isAdmin;
+    this.joinDate = joinDate;
+    this.borrowedBookList = borrowedBookList;
+  }
+
   public String getId() {
     return id;
   }

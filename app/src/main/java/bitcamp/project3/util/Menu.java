@@ -4,17 +4,16 @@ import bitcamp.project3.command.BookCommand;
 import bitcamp.project3.command.UserCommand;
 import bitcamp.project3.vo.Book;
 import bitcamp.project3.vo.User;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
-
-import static bitcamp.project3.util.Prompt.keyboardScanner;
 
 public class Menu {
   String[] loginMenu = {"로그인", "회원가입"};
   String[] userMainMenu = {"도서검색", "신간도서", "대출현황", "이용안내"};
   String[] adminMainMenu = {"사용자관리", "도서관리", "대출기록"};
-  String loginUser;
+  Login loginUser;
   Stack<String> menuPath = new Stack<>();
 
   List<User> userList = new ArrayList<>();
@@ -42,6 +41,9 @@ public class Menu {
   }
 
   public void menu() {
+    //dummy
+    new DummyData().addDummyUser();
+
     //loginMenu
     for (;;) {
       for(int i = 0; i < loginMenu.length; i++) {
@@ -71,9 +73,22 @@ public class Menu {
     String id = Prompt.input("id?");
     String pw = Prompt.input("pw?");
 
-    if(id.equals("root") && pw.equals("0000") || id.equals("test") && pw.equals("0000")) {
-      Login.getInstance().setName(id);
-      loginUser = id;
+    User user = new User();
+    user.setId(id);
+
+    if(!userList.contains(user)) {
+      System.out.println("로그인 정보를 확인하세요.");
+      return false;
+    }
+
+    user = userList.get(userList.indexOf(user));
+
+    if(user.getPw().equals(pw)) {
+      Login login = Login.getInstance();
+      login.setId(id);
+      login.setName(user.getName());
+      login.setAdmin(user.isAdmin());
+      loginUser = login;
       return true;
     } else {
       System.out.println("로그인 정보를 확인하세요.");
@@ -83,13 +98,11 @@ public class Menu {
 
   public void mainMenu() {
     menuPath.push("메인");
-    if(loginUser.equals("root")) {
+    if(loginUser.isAdmin()) {
       System.out.println("관리자 계정으로 로그인합니다.\n");
 
       adminMainMenu();
-    }
-
-    if(loginUser.equals("test")) {
+    } else {
       System.out.println("사용자 계정으로 로그인합니다.\n");
 
       userMainMenu();
@@ -163,5 +176,15 @@ public class Menu {
       strBuilder.append(menuPath.get(i));
     }
     return strBuilder.toString();
+  }
+
+  public class DummyData {
+    public void addDummyUser() {
+      User user;
+      user = new User("root", "0000", "관리자", true, LocalDate.now(), new ArrayList<>());
+      userList.add(user);
+      user = new User("test", "0000", "사용자1", false, LocalDate.now(), new ArrayList<>());
+      userList.add(user);
+    }
   }
 }

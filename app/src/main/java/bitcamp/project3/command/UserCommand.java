@@ -85,4 +85,8 @@ public class UserCommand extends AbstractCommand {
     User deletedUser = userList.remove(index);
     System.out.printf("'%s' 회원을 삭제 했습니다.\n", deletedUser.getName());
   }
+
+  public List<User> getUserList() {
+    return userList;
+  }
 }

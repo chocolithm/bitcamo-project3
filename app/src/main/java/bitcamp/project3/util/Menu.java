@@ -145,7 +145,8 @@ public class Menu {
           System.out.println("이용안내");
           continue;
         case "0":
-          Prompt.printLogout();
+          Logout.performLogout();
+          this.loginUser = null;
           return;
         default:
           Prompt.printNumberException();

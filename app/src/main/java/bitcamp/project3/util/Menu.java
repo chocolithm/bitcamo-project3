@@ -127,8 +127,6 @@ public class Menu {
           System.out.println("대출기록");
           continue;
         case "0":
-          Prompt.printLogout();
-          System.out.println("로그아웃합니다.");
           Logout.performLogout();
           this.loginUser = null;
           return;
@@ -159,7 +157,8 @@ public class Menu {
           System.out.println("이용안내");
           continue;
         case "0":
-          Prompt.printLogout();
+          Logout.performLogout();
+          this.loginUser = null;
           return;
         default:
           Prompt.printNumberException();

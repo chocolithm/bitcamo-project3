@@ -8,6 +8,9 @@ public class Logout {
         Login loginUser = Login.getInstance();
         if (loginUser.isLoggedIn()) {
             loginUser.setName(null);
+            Prompt.printLogout();
+        } else {
+            System.out.println("이미 로그아웃 상태입니다.");
         }
     }
 }

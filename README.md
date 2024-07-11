@@ -77,14 +77,14 @@
 ## 메인
 [연체 중인 도서가 있을 시 알림 표출]
 1. 도서대출  //LibraryCommand -> searchBook(title)
-2. 도서반납  //LibraryCommand -> returnBook()
+2. 도서반납  //LibraryCommand -> returnBook()       -> 나
 2. 신간도서  //LibraryCommand -> searchBook(date)
 3. 대출현황  //LibraryCommand -> showStatus()
 4. 이용안내  //LibraryCommand -> showGuide()
 0. 로그아웃  //Login -> logout()
 
-## 관리자 화면
-1. 사용자관리  //UserCommand
+## 관리자 화면                                         -> 내가
+1. 사용자관리  //UserCommand 
 2. 도서관리  //BookCommand
 <!-- 3. 대출기록   -->
 0. 로그아웃  //Login -> logout()
@@ -134,6 +134,8 @@ y : 연장되었습니다. / n : 반납하였습니다.
 ~~~~
 
 -----------------------------------------------------
+
+<내가 할 항목>
 
 ## 관리자 > 사용자관리
 1. 목록

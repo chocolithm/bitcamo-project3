@@ -115,7 +115,6 @@ public class Menu {
           continue;
         case "0":
           Prompt.printLogout();
-          System.out.println("로그아웃합니다.");
           Logout.performLogout();
           this.loginUser = null;
           return;

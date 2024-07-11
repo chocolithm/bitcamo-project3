@@ -76,8 +76,6 @@ public class Book {
         return borrowedBy;
     }
 
-    public void setReserved(boolean reserved) {
-        isReserved = reserved;
     public void setBorrowedBy(User borrowedBy) {
         this.borrowedBy = borrowedBy;
         if (borrowedBy != null) {

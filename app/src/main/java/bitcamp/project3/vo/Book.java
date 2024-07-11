@@ -28,6 +28,19 @@ public class Book {
         this.registeredDate = LocalDate.now();
     }
 
+    public Book(int no, String name, String author, String category, User borrowedBy,
+        User reservedBy,
+        LocalDate registeredDate, LocalDate borrowedDate) {
+        this.no = no;
+        this.name = name;
+        this.author = author;
+        this.category = category;
+        this.borrowedBy = borrowedBy;
+        this.reservedBy = reservedBy;
+        this.registeredDate = registeredDate;
+        this.borrowedDate = borrowedDate;
+    }
+
     public static int getNextSeqNo() {
         return ++seqNo;
     }

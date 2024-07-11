@@ -192,11 +192,11 @@ public class Menu {
 
     public void addDummyBook() {
       Book book;
-      book = new Book(Book.getNextSeqNo(), "인터스텔라", "홍길동", "과학", false, false, LocalDate.of(2024, 7, 10), null, null);
+      book = new Book(Book.getNextSeqNo(), "인터스텔라", "홍길동", "과학", null, null, LocalDate.of(2024, 7, 10), null);
       bookList.add(book);
-      book = new Book(Book.getNextSeqNo(), "군주론", "마키아벨리", "인문", false, false, LocalDate.of(2024, 6, 25), null, null);
+      book = new Book(Book.getNextSeqNo(), "군주론", "마키아벨리", "인문", null, null, LocalDate.of(2024, 6, 25), null);
       bookList.add(book);
-      book = new Book(Book.getNextSeqNo(), "자바의신", "엄진영", "컴퓨터과학", false, false, LocalDate.of(2024, 6, 20), null, null);
+      book = new Book(Book.getNextSeqNo(), "자바의신", "엄진영", "컴퓨터과학", null, null, LocalDate.of(2024, 6, 20), null);
       bookList.add(book);
     }
 
@@ -205,17 +205,15 @@ public class Menu {
 
       dummyBookList = new ArrayList<>();
       dummyBookList.add(bookList.get(1));
-      dummyBookList.getFirst().setBorrowed(true);
-      dummyBookList.getFirst().setBorrowDate(LocalDate.of(2024, 7, 11));
-      dummyBookList.getFirst().setReturnDate();
+      dummyBookList.getFirst().setBorrowedBy(userList.get(1));
       userList.get(1).setBorrowedBookList(dummyBookList);
 
       dummyBookList = new ArrayList<>();
       dummyBookList.add(bookList.get(2));
-      dummyBookList.getFirst().setBorrowed(true);
-      dummyBookList.getFirst().setBorrowDate(LocalDate.of(2024, 6, 22));
-      dummyBookList.getFirst().setReturnDate();
+      dummyBookList.getFirst().setBorrowedBy(userList.get(2));
       userList.get(2).setBorrowedBookList(dummyBookList);
     }
   }
 }
+
+

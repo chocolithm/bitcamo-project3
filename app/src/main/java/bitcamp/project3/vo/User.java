@@ -5,10 +5,10 @@ import java.util.List;
 import java.util.Objects;
 
 public class User {
-  String id;
-  String pw;
-  String name;
-  boolean isAdmin;
+  private String id;
+  private String pw;
+  private String name;
+  private boolean isAdmin;
   LocalDate joinDate;
   List<Book> borrowedBookList;
 

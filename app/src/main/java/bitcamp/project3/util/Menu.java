@@ -42,8 +42,10 @@ public class Menu {
 
   public void menu() {
     //dummy
-    new DummyData().addDummyUser();
-    new DummyData().addDummyBook();
+    DummyData dummy = new DummyData();
+    dummy.addDummyUser();
+    dummy.addDummyBook();
+    dummy.borrowDummy();
 
     //loginMenu
     for (;;) {
@@ -194,6 +196,26 @@ public class Menu {
       bookList.add(book);
       book = new Book(Book.getNextSeqNo(), "군주론", "마키아벨리", "인문", false, false, LocalDate.of(2024, 6, 25), null, null);
       bookList.add(book);
+      book = new Book(Book.getNextSeqNo(), "자바의신", "엄진영", "컴퓨터과학", false, false, LocalDate.of(2024, 6, 20), null, null);
+      bookList.add(book);
+    }
+
+    public void borrowDummy() {
+      List<Book> dummyBookList;
+
+      dummyBookList = new ArrayList<>();
+      dummyBookList.add(bookList.get(1));
+      dummyBookList.getFirst().setBorrowed(true);
+      dummyBookList.getFirst().setBorrowDate(LocalDate.of(2024, 7, 11));
+      dummyBookList.getFirst().setReturnDate();
+      userList.get(1).setBorrowedBookList(dummyBookList);
+
+      dummyBookList = new ArrayList<>();
+      dummyBookList.add(bookList.get(2));
+      dummyBookList.getFirst().setBorrowed(true);
+      dummyBookList.getFirst().setBorrowDate(LocalDate.of(2024, 6, 22));
+      dummyBookList.getFirst().setReturnDate();
+      userList.get(2).setBorrowedBookList(dummyBookList);
     }
   }
 }

@@ -115,6 +115,6 @@ public class Book {
     }
 
     public void setReturnDate() {
-        this.returnDate = LocalDate.now().plusDays(7);
+        this.returnDate = this.borrowDate.plusDays(7);
     }
 }

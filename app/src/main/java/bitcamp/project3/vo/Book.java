@@ -24,6 +24,19 @@ public class Book {
 
     }
 
+    public Book(int no, String name, String author, String category, boolean isBorrowed,
+        boolean isReserved, LocalDate registerDate, LocalDate borrowDate, LocalDate returnDate) {
+        this.no = no;
+        this.name = name;
+        this.author = author;
+        this.category = category;
+        this.isBorrowed = isBorrowed;
+        this.isReserved = isReserved;
+        this.registerDate = registerDate;
+        this.borrowDate = borrowDate;
+        this.returnDate = returnDate;
+    }
+
     public Book(int no) {
         this.no = no;
     }

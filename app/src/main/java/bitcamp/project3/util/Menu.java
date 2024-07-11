@@ -43,6 +43,7 @@ public class Menu {
   public void menu() {
     //dummy
     new DummyData().addDummyUser();
+    new DummyData().addDummyBook();
 
     //loginMenu
     for (;;) {
@@ -183,6 +184,16 @@ public class Menu {
       userList.add(user);
       user = new User("test", "0000", "사용자1", false, LocalDate.now(), new ArrayList<>());
       userList.add(user);
+      user = new User("test2", "0000", "사용자2", false, LocalDate.now(), new ArrayList<>());
+      userList.add(user);
+    }
+
+    public void addDummyBook() {
+      Book book;
+      book = new Book(Book.getNextSeqNo(), "인터스텔라", "홍길동", "과학", false, false, LocalDate.of(2024, 7, 10), null, null);
+      bookList.add(book);
+      book = new Book(Book.getNextSeqNo(), "군주론", "마키아벨리", "인문", false, false, LocalDate.of(2024, 6, 25), null, null);
+      bookList.add(book);
     }
   }
 }

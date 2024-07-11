@@ -47,7 +47,7 @@ public class Menu {
           System.out.println("시스템을 종료합니다.");
           return;
         default:
-          System.out.println("유효한 숫자를 입력해주세요.");
+          Prompt.printNumberException();
       }
     }
   }
@@ -98,10 +98,10 @@ public class Menu {
           System.out.println("대출기록");
           continue;
         case "0":
-          System.out.println("로그아웃합니다.");
+          Prompt.printLogout();
           return;
         default:
-          System.out.println("유효한 숫자를 입력해주세요.");
+          Prompt.printNumberException();
       }
     }
   }
@@ -127,10 +127,10 @@ public class Menu {
           System.out.println("이용안내");
           continue;
         case "0":
-          System.out.println("로그아웃합니다.");
+          Prompt.printLogout();
           return;
         default:
-          System.out.println("유효한 숫자를 입력해주세요.");
+          Prompt.printNumberException();
       }
     }
   }

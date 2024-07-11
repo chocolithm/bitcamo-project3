@@ -15,26 +15,18 @@ public class Book {
     private User reservedBy;
     private LocalDate registeredDate;  // 도서 등록일
     private LocalDate borrowedDate;    // 대출일
+    private boolean reserved;
 
     public Book() {
-        this.no = getNextSeqNo();
     }
 
     public Book(int no) {
         this.no = no;
     }
 
-    public Book(int no, String name, String author, String category) {
-        this.no = no;
-        this.name = name;
-        this.author = author;
-        this.category = category;
-        this.registeredDate = LocalDate.now();
-    }
-
     public Book(int no, String name, String author, String category, User borrowedBy,
-        User reservedBy,
-        LocalDate registeredDate, LocalDate borrowedDate) {
+                User reservedBy,
+                LocalDate registeredDate, LocalDate borrowedDate) {
         this.no = no;
         this.name = name;
         this.author = author;
@@ -43,6 +35,14 @@ public class Book {
         this.reservedBy = reservedBy;
         this.registeredDate = registeredDate;
         this.borrowedDate = borrowedDate;
+    }
+
+    public void setBorrowedDate(LocalDate borrowedDate) {
+        this.borrowedDate = borrowedDate;
+    }
+
+    public void setReserved(boolean reserved) {
+        this.reserved = reserved;
     }
 
     public static int getNextSeqNo() {
@@ -85,6 +85,14 @@ public class Book {
         return borrowedBy != null;
     }
 
+    public void setBorrowed(boolean borrowed) {
+        if (borrowed) {
+            this.borrowedDate = LocalDate.now();
+        } else {
+            this.borrowedDate = null;
+        }
+    }
+
     public boolean isReserved() {
         return reservedBy != null;
     }
@@ -95,11 +103,6 @@ public class Book {
 
     public void setBorrowedBy(User borrowedBy) {
         this.borrowedBy = borrowedBy;
-        if (borrowedBy != null) {
-            this.borrowedDate = LocalDate.now();
-        } else {
-            this.borrowedDate = null;
-        }
     }
 
     public User getReservedBy() {
@@ -133,5 +136,7 @@ public class Book {
     public void returnBook() {
         this.borrowedBy = null;
         this.borrowedDate = null;
+
+
     }
 }

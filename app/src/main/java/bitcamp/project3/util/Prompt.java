@@ -32,12 +32,25 @@ public class Prompt {
     keyboardScanner.close();
   }
 
-  public static void printHistory() {
-    System.out.println("[명령 내역]----------------");
-    Iterator<String> iterator = inputQueue.iterator();
-    while (iterator.hasNext()) {
-      System.out.println(iterator.next());
+  public static void loading(long time){
+    long sz = time/1000;
+    try {
+      for(int i=0;i<sz;i++) {
+        Thread.sleep(time/sz);
+      }
+      System.out.print("\n");
+    } catch (InterruptedException e) {
+      // e.printStackTrace();
     }
-    System.out.println("------------------------ 끝");
+  }
+
+  public static void printLogout() {
+    System.out.println("로그아웃합니다.");
+    loading(1000);
+  }
+
+  public static void printNumberException() {
+    System.out.println("유효한 숫자를 입력해주세요.");
+    loading(1000);
   }
 }

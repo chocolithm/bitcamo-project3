@@ -4,7 +4,7 @@ import bitcamp.project3.util.Prompt;
 import bitcamp.project3.vo.Book;
 import java.util.List;
 
-public class BookCommand {
+public class BookCommand extends AbstractCommand {
 
     private List<Book> bookList;
     private String[] menus = {"등록", "목록", "수정", "삭제"};

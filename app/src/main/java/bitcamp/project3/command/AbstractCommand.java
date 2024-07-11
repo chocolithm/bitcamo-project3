@@ -1,7 +1,6 @@
 package bitcamp.project3.command;
 
 import bitcamp.project3.util.Prompt;
-
 import java.util.Stack;
 
 public abstract class AbstractCommand implements Command {
@@ -63,7 +62,7 @@ public abstract class AbstractCommand implements Command {
     return menuNo >= 1 && menuNo <= menus.length;
   }
 
-  private String getMenuPathTitle(Stack menuPath) {
+  private String getMenuPathTitle(Stack<String> menuPath) {
     StringBuilder strBuilder = new StringBuilder();
     for (int i = 0; i < menuPath.size(); i++) {
       if (strBuilder.length() > 0) {

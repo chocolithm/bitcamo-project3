@@ -4,41 +4,28 @@ import java.time.LocalDate;
 
 public class Book {
 
+    private static final int LOAN_PERIOD_DAYS = 14; // 대출 기간을 14일로 설정
     private static int seqNo;
 
     private int no; // 번호
-    private String name; //제목
+    private String name; // 제목
     private String author; // 저자
     private String category; // 카테고리
-    private boolean isBorrowed; // 대출 상태
-    private boolean isReserved; // 예약 상태
-//    String 예약한사람
-    private LocalDate registerDate; // 등록일
-    private LocalDate borrowDate;   // 빌린 기간
-    private LocalDate returnDate;   // 반납일
-//    private String formattedRegisterDate;
-//    private String formattedReturnDate;
-
+    private User borrowedBy;
+    private User reservedBy;
+    private LocalDate registeredDate;  // 도서 등록일
+    private LocalDate borrowedDate;    // 대출일
 
     public Book() {
-
+        this.no = getNextSeqNo();
     }
 
-    public Book(int no, String name, String author, String category, boolean isBorrowed,
-        boolean isReserved, LocalDate registerDate, LocalDate borrowDate, LocalDate returnDate) {
+    public Book(int no, String name, String author, String category) {
         this.no = no;
         this.name = name;
         this.author = author;
         this.category = category;
-        this.isBorrowed = isBorrowed;
-        this.isReserved = isReserved;
-        this.registerDate = registerDate;
-        this.borrowDate = borrowDate;
-        this.returnDate = returnDate;
-    }
-
-    public Book(int no) {
-        this.no = no;
+        this.registeredDate = LocalDate.now();
     }
 
     public static int getNextSeqNo() {
@@ -78,43 +65,56 @@ public class Book {
     }
 
     public boolean isBorrowed() {
-        return isBorrowed;
-    }
-
-    public void setBorrowed(boolean borrowed) {
-        isBorrowed = borrowed;
+        return borrowedBy != null;
     }
 
     public boolean isReserved() {
-        return isReserved;
+        return reservedBy != null;
     }
 
-    public void setReserved(boolean reserved) {
-        isReserved = reserved;
+    public User getBorrowedBy() {
+        return borrowedBy;
     }
 
-    public LocalDate getRegisterDate() {
-        return registerDate;
+    public void setBorrowedBy(User borrowedBy) {
+        this.borrowedBy = borrowedBy;
+        if (borrowedBy != null) {
+            this.borrowedDate = LocalDate.now();
+        } else {
+            this.borrowedDate = null;
+        }
     }
 
-
-    public void setRegisterDate() {
-        this.registerDate = LocalDate.now();
+    public User getReservedBy() {
+        return reservedBy;
     }
 
-    public LocalDate getBorrowDate() {
-        return borrowDate;
+    public void setReservedBy(User reservedBy) {
+        this.reservedBy = reservedBy;
     }
 
-    public void setBorrowDate(LocalDate borrowDate) {
-        this.borrowDate = borrowDate;
+    public LocalDate getRegisteredDate() {
+        return registeredDate;
+    }
+
+    public void setRegisteredDate(LocalDate registeredDate) {
+        this.registeredDate = registeredDate;
+    }
+
+    public LocalDate getBorrowedDate() {
+        return borrowedDate;
     }
 
     public LocalDate getReturnDate() {
-        return returnDate;
+        return borrowedDate != null ? borrowedDate.plusDays(LOAN_PERIOD_DAYS) : null;
     }
 
-    public void setReturnDate() {
-        this.returnDate = LocalDate.now().plusDays(7);
+    public boolean isOverdue() {
+        return borrowedDate != null && LocalDate.now().isAfter(getReturnDate());
+    }
+
+    public void returnBook() {
+        this.borrowedBy = null;
+        this.borrowedDate = null;
     }
 }

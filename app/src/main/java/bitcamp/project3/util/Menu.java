@@ -142,34 +142,35 @@ public class Menu {
   }
 
   public void userMainMenu() {
-    for (;;) {
-      for(int i = 0; i < userMainMenu.length; i++) {
-        System.out.printf("%d. %s\n", (i + 1), userMainMenu[i]);
-      }
-      System.out.println("0. 로그아웃");
-
-      switch (Prompt.input("%s>", getMenuPathTitle(menuPath))){
-        case "1":
-          System.out.println("도서검색");
-          continue;
-        case "2":
-          System.out.println("신간도서");
-          continue;
-        case "3":
-          System.out.println("대출현황");
-          continue;
-        case "4":
-          System.out.println("이용안내");
-          continue;
-        case "0":
-          Logout.performLogout();
-          this.loginUser = null;
-          menuPath.pop();
-          return;
-        default:
-          Prompt.printNumberException();
-      }
-    }
+    libraryCommand.execute(menuPath);
+//    for (;;) {
+//      for(int i = 0; i < userMainMenu.length; i++) {
+//        System.out.printf("%d. %s\n", (i + 1), userMainMenu[i]);
+//      }
+//      System.out.println("0. 로그아웃");
+//
+//      switch (Prompt.input("%s>", getMenuPathTitle(menuPath))){
+//        case "1":
+//
+//          continue;
+//        case "2":
+//          System.out.println("신간도서");
+//          continue;
+//        case "3":
+//          System.out.println("대출현황");
+//          continue;
+//        case "4":
+//          System.out.println("이용안내");
+//          continue;
+//        case "0":
+//          Logout.performLogout();
+//          this.loginUser = null;
+//          menuPath.pop();
+//          return;
+//        default:
+//          Prompt.printNumberException();
+//      }
+//    }
   }
 
   private String getMenuPathTitle(Stack<String> menuPath) {
@@ -206,18 +207,31 @@ public class Menu {
 
     public void borrowDummy() {
       List<Book> dummyBookList;
+      List<Book> myBookList;
+      User user;
+      Book book;
 
       dummyBookList = new ArrayList<>();
-      dummyBookList.add(bookList.get(1));
-      dummyBookList.getFirst().setBorrowedBy(userList.get(1));
-      userList.get(1).setBorrowedBookList(dummyBookList);
+      user = userList.get(1);
+      myBookList = user.getBorrowedBookList();
+      book = bookList.get(1);
+      dummyBookList.add(book);
+      dummyBookList.getFirst().setBorrowedBy(user);
+      dummyBookList.getFirst().setBorrowed(true);
+      myBookList.add(book);
+      user.setBorrowedBookList(myBookList);
 
       dummyBookList = new ArrayList<>();
-      dummyBookList.add(bookList.get(2));
-      dummyBookList.getFirst().setBorrowedBy(userList.get(2));
-      userList.get(2).setBorrowedBookList(dummyBookList);
+      user = userList.get(1);
+      myBookList = user.getBorrowedBookList();
+      book = bookList.get(2);
+      dummyBookList.add(book);
+      dummyBookList.getFirst().setBorrowedBy(user);
+      dummyBookList.getFirst().setBorrowed(true);
+      myBookList.add(book);
+      user.setBorrowedBookList(myBookList);
     }
-    }
+  }
 }
 
 

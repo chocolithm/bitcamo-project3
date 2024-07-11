@@ -45,7 +45,10 @@ public abstract class AbstractCommand implements Command {
 
   private void printMenus() {
     String[] menus = getMenus();
-    System.out.printf("[%s]\n", menuTitle);
+    if(!menuTitle.isEmpty()) {
+      System.out.printf("[%s]\n", menuTitle);
+    }
+
     for (int i = 0; i < menus.length; i++) {
       System.out.printf("%d. %s\n", (i + 1), menus[i]);
     }
@@ -69,6 +72,9 @@ public abstract class AbstractCommand implements Command {
         strBuilder.append("/");
       }
       strBuilder.append(menuPath.get(i));
+      if(menuPath.get(i).isEmpty()) {
+        strBuilder.deleteCharAt(strBuilder.length() - 1);
+      }
     }
     return strBuilder.toString();
   }

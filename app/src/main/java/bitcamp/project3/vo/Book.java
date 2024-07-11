@@ -1,6 +1,7 @@
 package bitcamp.project3.vo;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Book {
 
@@ -136,7 +137,20 @@ public class Book {
     public void returnBook() {
         this.borrowedBy = null;
         this.borrowedDate = null;
+    }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        Book book = (Book) o;
+        return no == book.no;
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(no);
     }
 }

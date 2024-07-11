@@ -36,13 +36,13 @@ public class LibraryCommand extends AbstractCommand {
                 this.returnBook();
                 break;
             case "신간도서":
-                this.newBooks();
+//                this.newBooks();
                 break;
             case "대출현황":
-                this.showStatus();
+//                this.showStatus();
                 break;
             case "이용안내":
-                this.showGuide();
+//                this.showGuide();
                 break;
         }
     }
@@ -54,8 +54,8 @@ public class LibraryCommand extends AbstractCommand {
         for (Book book : bookList) {
             if (book.getName().contains(title)) {
                 System.out.printf("%d       %s    %s      %s\n",
-                        book.getNo(), book.getCategory(), book.getName(),
-                        book.isBorrowed() ? (book.isReserved() ? "예약중" : "대출중") : "대출가능");
+                    book.getNo(), book.getCategory(), book.getName(),
+                    book.isBorrowed() ? (book.isReserved() ? "예약중" : "대출중") : "대출가능");
                 count++;
             }
         }
@@ -84,7 +84,11 @@ public class LibraryCommand extends AbstractCommand {
         if (!selectedBook.isBorrowed()) {
             selectedBook.setBorrowed(true);
             selectedBook.setBorrowedDate(LocalDate.now());
-            currentUser.getBorrowedBookList().add(selectedBook);
+
+            List<Book> myBookList = currentUser.getBorrowedBookList();
+            myBookList.add(selectedBook);
+            currentUser.setBorrowedBookList(myBookList);
+
             System.out.println("대출되었습니다.");
         } else if (selectedBook.isReserved()) {
             System.out.println("예약중인 도서입니다. 대출이 불가합니다.");
@@ -100,27 +104,52 @@ public class LibraryCommand extends AbstractCommand {
     }
 
     private void returnBook() {
-        int bookNo = Prompt.inputInt("반납할 도서 번호?");
-        Book selectedBook = null;
-        for (Book book : bookList) {
-            if (book.getNo() == bookNo) {
-                selectedBook = book;
-                break;
-            }
-        }
+        List<Book> myBookList = currentUser.getBorrowedBookList();
 
-        if (selectedBook == null) {
-            System.out.println("해당 번호의 도서를 찾을 수 없습니다.");
+        listMyBook(myBookList);
+
+        int bookNo = Prompt.inputInt("반납할 도서 번호?");
+        Book selectedBook = new Book(bookNo);
+        if (!myBookList.contains(selectedBook)) {
+            System.out.println("해당 도서는 대출 중이 아닙니다.");
             return;
         }
 
-        if (selectedBook.isBorrowed()) {
-            selectedBook.setBorrowed(false);
-            selectedBook.setBorrowedDate(null);
-            currentUser.getBorrowedBookList().remove(selectedBook);
-            System.out.println("도서를 반납했습니다.");
-        } else {
-            System.out.println("해당 도서는 대출 중이 아닙니다.");
+        selectedBook.setBorrowed(false);
+        selectedBook.setBorrowedDate(null);
+        myBookList.remove(selectedBook);
+        currentUser.setBorrowedBookList(myBookList);
+        System.out.println("도서를 반납했습니다.");
+
+//        Book selectedBook = null;
+//        for (Book book : myBookList) {
+//            if (book.getNo() == bookNo) {
+//                selectedBook = book;
+//                break;
+//            }
+//        }
+//
+//        if (selectedBook == null) {
+//            System.out.println("해당 번호의 도서를 찾을 수 없습니다.");
+//            return;
+//        }
+//
+//        if (selectedBook.isBorrowed()) {
+//            selectedBook.setBorrowed(false);
+//            selectedBook.setBorrowedDate(null);
+//            currentUser.getBorrowedBookList().remove(selectedBook);
+//            System.out.println("도서를 반납했습니다.");
+//        } else {
+//            System.out.println("해당 도서는 대출 중이 아닙니다.");
+//        }
+    }
+
+    private void listMyBook(List<Book> myBookList) {
+        System.out.println("번호    분류    도서명    대출일    반납예정일    상태");
+        for(Book book : myBookList) {
+            System.out.printf("%d    %s    %s    %s    %s    %s\n", book.getNo(), book.getCategory(),
+                book.getName(), book.getBorrowedDate(), book.getBorrowedDate().plusDays(14),
+                book.isOverdue() ? "연체" : "정상");
         }
     }
 }

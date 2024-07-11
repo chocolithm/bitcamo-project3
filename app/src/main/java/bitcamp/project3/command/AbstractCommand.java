@@ -22,7 +22,7 @@ public abstract class AbstractCommand implements Command {
       if (command.equals("menu")) {
         printMenus();
         continue;
-      } else if (command.equals("9")) { // 이전 메뉴 선택
+      } else if (command.equals("0")) { // 이전 메뉴 선택
         menuPath.pop();
         return;
       }
@@ -49,7 +49,7 @@ public abstract class AbstractCommand implements Command {
     for (int i = 0; i < menus.length; i++) {
       System.out.printf("%d. %s\n", (i + 1), menus[i]);
     }
-    System.out.println("9. 이전");
+    System.out.println("0. 이전");
   }
 
   private String getMenuTitle(int menuNo) {

@@ -51,7 +51,7 @@ public class Menu {
       }
       System.out.println("0. 종료");
 
-      switch (Prompt.input("입력>")){
+      switch (Prompt.input("%s>", getMenuPathTitle(menuPath))){
         case "1": //login
           if(login()){
             mainMenu();
@@ -88,6 +88,7 @@ public class Menu {
       login.setId(id);
       login.setName(user.getName());
       login.setAdmin(user.isAdmin());
+
       loginUser = login;
       return true;
     } else {
@@ -99,12 +100,8 @@ public class Menu {
   public void mainMenu() {
     menuPath.push("메인");
     if(loginUser.isAdmin()) {
-      System.out.println("관리자 계정으로 로그인합니다.\n");
-
       adminMainMenu();
     } else {
-      System.out.println("사용자 계정으로 로그인합니다.\n");
-
       userMainMenu();
     }
   }
@@ -116,7 +113,7 @@ public class Menu {
       }
       System.out.println("0. 로그아웃");
 
-      switch (Prompt.input("입력>")) {
+      switch (Prompt.input("%s>", getMenuPathTitle(menuPath))) {
         case "1":
           userCommand.execute(menuPath);
           continue;
@@ -129,6 +126,7 @@ public class Menu {
         case "0":
           Logout.performLogout();
           this.loginUser = null;
+          menuPath.pop();
           return;
         default:
           Prompt.printNumberException();
@@ -143,7 +141,7 @@ public class Menu {
       }
       System.out.println("0. 로그아웃");
 
-      switch (Prompt.input("입력>")){
+      switch (Prompt.input("%s>", getMenuPathTitle(menuPath))){
         case "1":
           System.out.println("도서검색");
           continue;
@@ -159,6 +157,7 @@ public class Menu {
         case "0":
           Logout.performLogout();
           this.loginUser = null;
+          menuPath.pop();
           return;
         default:
           Prompt.printNumberException();

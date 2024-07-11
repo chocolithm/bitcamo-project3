@@ -81,13 +81,13 @@ public class Menu {
   }
 
   public void adminMainMenu() {
-    for (;;) {
-      for(int i = 0; i < adminMainMenu.length; i++) {
+    for (; ; ) {
+      for (int i = 0; i < adminMainMenu.length; i++) {
         System.out.printf("%d. %s\n", (i + 1), adminMainMenu[i]);
       }
       System.out.println("0. 로그아웃");
 
-      switch (Prompt.input("입력>")){
+      switch (Prompt.input("입력>")) {
         case "1":
           System.out.println("사용자관리");
           continue;
@@ -99,6 +99,8 @@ public class Menu {
           continue;
         case "0":
           System.out.println("로그아웃합니다.");
+          Logout.performLogout();
+          this.loginUser = null;
           return;
         default:
           System.out.println("유효한 숫자를 입력해주세요.");

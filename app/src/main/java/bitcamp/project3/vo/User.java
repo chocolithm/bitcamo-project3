@@ -1,7 +1,6 @@
 package bitcamp.project3.vo;
 
-import java.awt.print.Book;
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
@@ -10,8 +9,16 @@ public class User {
   String pw;
   String name;
   boolean isAdmin;
-  Date joinDate;
+  LocalDate joinDate;
   List<Book> borrowedBookList;
+
+  public User() {
+
+  }
+
+  public User(String id) {
+    this.id = id;
+  }
 
   public String getId() {
     return id;
@@ -45,11 +52,11 @@ public class User {
     isAdmin = admin;
   }
 
-  public Date getJoinDate() {
+  public LocalDate getJoinDate() {
     return joinDate;
   }
 
-  public void setJoinDate(Date joinDate) {
+  public void setJoinDate(LocalDate joinDate) {
     this.joinDate = joinDate;
   }
 

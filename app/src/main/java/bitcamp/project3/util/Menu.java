@@ -56,7 +56,7 @@ public class Menu {
           }
           continue;
         case "2": //join
-          System.out.println("회원가입 화면입니다.");
+          userCommand.addUser();
           continue;
         case "0":
           System.out.println("시스템을 종료합니다.");

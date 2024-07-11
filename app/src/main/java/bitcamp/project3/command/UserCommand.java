@@ -27,7 +27,7 @@ public class UserCommand extends AbstractCommand {
       case "목록":
         this.listUser();
         break;
-      case "변경":
+      case "수정":
         this.updateUser();
         break;
       case "삭제":
@@ -41,6 +41,7 @@ public class UserCommand extends AbstractCommand {
     user.setId(Prompt.input("ID?"));
     if(userList.contains(user)) {
       System.out.println("이미 존재하는 ID입니다.");
+      Prompt.loading(1000);
       return;
     }
     user.setPw(Prompt.input("PW?"));
@@ -51,12 +52,13 @@ public class UserCommand extends AbstractCommand {
     userList.add(user);
 
     System.out.println("등록되었습니다.");
+    Prompt.loading(1000);
   }
 
   private void listUser() {
-    System.out.println("ID 이름 등록일");
+    System.out.println("ID 이름 등록일 관리자여부");
     for (User user : userList) {
-      System.out.printf("%s %s %s\n", user.getId(), user.getName(), user.getJoinDate());
+      System.out.printf("%s %s %s %s\n", user.getId(), user.getName(), user.getJoinDate(), user.isAdmin());
     }
   }
 
@@ -65,13 +67,39 @@ public class UserCommand extends AbstractCommand {
     int index = userList.indexOf(new User(userId));
     if (index == -1) {
       System.out.println("없는 회원입니다.");
+      Prompt.loading(1000);
       return;
     }
 
     User user = userList.get(index);
+    String[] updateMenu = {"비밀번호", "이름", "관리자여부"};
+    for(int i = 0; i < updateMenu.length; i++) {
+      System.out.printf("%d. %s\n", (i + 1), updateMenu[i]);
+    }
+    switch (Prompt.input("번호?")) {
+      case "1":
+        user.setPw(Prompt.input("비밀번호?"));
+        break;
+      case "2":
+        user.setName(Prompt.input("이름?(%s)", user.getName()));
+        break;
+      case "3":
+        user.setAdmin(!user.isAdmin());
+        if(user.isAdmin()) {
+          System.out.println("관리자 권한 부여");
+          Prompt.loading(1000);
+        } else {
+          System.out.println("관리자 권한 해제");
+          Prompt.loading(1000);
+        }
+        break;
+      default:
+        System.out.println("없는 항목입니다.");
+        Prompt.loading(1000);
+    }
 
-    // 차후 구현
     System.out.println("변경 했습니다.");
+    Prompt.loading(1000);
   }
 
   private void deleteUser() {
@@ -79,14 +107,12 @@ public class UserCommand extends AbstractCommand {
     int index = userList.indexOf(new User(userId));
     if (index == -1) {
       System.out.println("없는 회원입니다.");
+      Prompt.loading(1000);
       return;
     }
 
     User deletedUser = userList.remove(index);
     System.out.printf("'%s' 회원을 삭제 했습니다.\n", deletedUser.getName());
-  }
-
-  public List<User> getUserList() {
-    return userList;
+    Prompt.loading(1000);
   }
 }

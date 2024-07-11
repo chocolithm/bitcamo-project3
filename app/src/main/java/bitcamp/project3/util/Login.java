@@ -14,6 +14,10 @@ public class Login {
     return loginUser;
   }
 
+  public static void freeInstance() {
+    loginUser = null;
+  }
+
   public String getName() {
     return name;
   }

@@ -1,22 +1,17 @@
 package bitcamp.project3.util;
 
 public class Login {
-  String name;
-
-  Login() {
-
-  }
-
+  private String name;
   private static Login loginUser;
 
-  public static Login getInstance() {
-    loginUser = new Login();
-
-    return loginUser;
+  private Login() {
   }
 
-  public static void freeInstance() {
-    loginUser = null;
+  public static Login getInstance() {
+    if (loginUser == null) {
+      loginUser = new Login();
+    }
+    return loginUser;
   }
 
   public String getName() {
@@ -25,5 +20,9 @@ public class Login {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  public boolean isLoggedIn() {
+    return name != null && !name.isEmpty();
   }
 }

@@ -16,7 +16,9 @@ public class Book {
     private LocalDate registerDate; // 등록일
     private LocalDate borrowDate;   // 빌린 기간
     private LocalDate returnDate;   // 반납일
-    private String formattedRegisterDate;
+//    private String formattedRegisterDate;
+//    private String formattedReturnDate;
+
 
     public Book() {
 

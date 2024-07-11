@@ -20,6 +20,10 @@ public class Book {
         this.no = getNextSeqNo();
     }
 
+    public Book(int no) {
+        this.no = no;
+    }
+
     public Book(int no, String name, String author, String category) {
         this.no = no;
         this.name = name;

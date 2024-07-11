@@ -1,6 +1,7 @@
 package bitcamp.project3.util;
 
 import bitcamp.project3.command.BookCommand;
+import bitcamp.project3.command.LibraryCommand;
 import bitcamp.project3.command.UserCommand;
 import bitcamp.project3.vo.Book;
 import bitcamp.project3.vo.User;
@@ -21,6 +22,7 @@ public class Menu {
 
   UserCommand userCommand = new UserCommand("사용자관리", userList);
   BookCommand bookCommand = new BookCommand("도서관리", bookList);
+  LibraryCommand libraryCommand;
 
   Menu() {
 
@@ -87,6 +89,8 @@ public class Menu {
     user = userList.get(userList.indexOf(user));
 
     if(user.getPw().equals(pw)) {
+      libraryCommand = new LibraryCommand("", bookList, userList, user);
+
       Login login = Login.getInstance();
       login.setId(id);
       login.setName(user.getName());

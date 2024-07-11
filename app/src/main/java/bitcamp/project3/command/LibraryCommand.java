@@ -4,6 +4,7 @@ import bitcamp.project3.util.Prompt;
 import bitcamp.project3.vo.Book;
 import bitcamp.project3.vo.User;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class LibraryCommand extends AbstractCommand {
@@ -81,7 +82,8 @@ public class LibraryCommand extends AbstractCommand {
         }
 
         if (!selectedBook.isBorrowed()) {
-            selectedBook.setBorrowedBy(currentUser);
+            selectedBook.setBorrowed(true);
+            selectedBook.setBorrowedDate(LocalDate.now());
             currentUser.getBorrowedBookList().add(selectedBook);
             System.out.println("대출되었습니다.");
         } else if (selectedBook.isReserved()) {
@@ -90,6 +92,7 @@ public class LibraryCommand extends AbstractCommand {
             System.out.println("대출 중인 도서입니다. 예약하시겠습니까? (y/n)");
             String answer = Prompt.input("선택 (y/n)");
             if (answer.equalsIgnoreCase("y")) {
+                selectedBook.setReserved(true);
                 selectedBook.setReservedBy(currentUser);
                 System.out.println("예약되었습니다.");
             }
@@ -97,14 +100,27 @@ public class LibraryCommand extends AbstractCommand {
     }
 
     private void returnBook() {
-    }
+        int bookNo = Prompt.inputInt("반납할 도서 번호?");
+        Book selectedBook = null;
+        for (Book book : bookList) {
+            if (book.getNo() == bookNo) {
+                selectedBook = book;
+                break;
+            }
+        }
 
-    private void newBooks() {
-    }
+        if (selectedBook == null) {
+            System.out.println("해당 번호의 도서를 찾을 수 없습니다.");
+            return;
+        }
 
-    private void showStatus() {
-    }
-
-    private void showGuide() {
+        if (selectedBook.isBorrowed()) {
+            selectedBook.setBorrowed(false);
+            selectedBook.setBorrowedDate(null);
+            currentUser.getBorrowedBookList().remove(selectedBook);
+            System.out.println("도서를 반납했습니다.");
+        } else {
+            System.out.println("해당 도서는 대출 중이 아닙니다.");
+        }
     }
 }

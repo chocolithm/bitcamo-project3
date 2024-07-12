@@ -96,16 +96,18 @@ public class UserCommand extends AbstractCommand {
       case "3":
         user.setAdmin(!user.isAdmin());
         if(user.isAdmin()) {
-          System.out.println("관리자 권한 부여");
+          System.out.println("관리자 권한을 부여합니다.");
           Prompt.loading(1000);
+          return;
         } else {
-          System.out.println("관리자 권한 해제");
+          System.out.println("관리자 권한을 회수합니다.");
           Prompt.loading(1000);
+          return;
         }
-        break;
       default:
         System.out.println("없는 항목입니다.");
         Prompt.loading(1000);
+        return;
     }
 
     Prompt.printUpdateComplete();

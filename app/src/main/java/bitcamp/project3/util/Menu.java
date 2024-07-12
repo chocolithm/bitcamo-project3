@@ -5,16 +5,15 @@ import bitcamp.project3.command.LibraryCommand;
 import bitcamp.project3.command.UserCommand;
 import bitcamp.project3.vo.Book;
 import bitcamp.project3.vo.User;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
+import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import org.checkerframework.checker.units.qual.A;
 
 public class Menu {
   String[] loginMenu = {"로그인", "회원가입"};
-  String[] adminMainMenu = {"사용자관리", "도서관리", "대출기록"};
+  String[] adminMainMenu = {"사용자관리", "도서관리"};
   Login loginUser;
   Stack<String> menuPath = new Stack<>();
 
@@ -131,9 +130,6 @@ public class Menu {
           continue;
         case "2":
           bookCommand.execute(menuPath);
-          continue;
-        case "3":
-          System.out.println("대출기록");
           continue;
         case "0":
           Logout.performLogout();

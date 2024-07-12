@@ -49,12 +49,18 @@ public class LibraryCommand extends AbstractCommand {
 
     private void searchBook() {
         String title = Prompt.input("도서 제목?");
-        System.out.println("번호    분류    도서명          대출여부");
+        System.out.printf("번호%s분류%s도서명%s대출여부\n",
+            Prompt.getSpaces(8, "번호"),
+            Prompt.getSpaces(12, "분류"),
+            Prompt.getSpaces(20, "도서명")
+        );
         int count = 0;
         for (Book book : bookList) {
-            if (book.getName().contains(title)) {
-                System.out.printf("%d       %s    %s      %s\n",
-                    book.getNo(), book.getCategory(), book.getName(),
+            if (book.getName().toLowerCase().contains(title)) {
+                System.out.printf("%d%s%s%s%s%s%s\n",
+                    book.getNo(), Prompt.getSpaces(8, String.valueOf(book.getNo())),
+                    book.getCategory(), Prompt.getSpaces(12, book.getCategory()),
+                    book.getName(), Prompt.getSpaces(20, book.getName()),
                     book.isBorrowed() ? (book.isReserved() ? "예약중" : "대출중") : "대출가능");
                 count++;
             }
@@ -105,39 +111,24 @@ public class LibraryCommand extends AbstractCommand {
         myBookList.remove(selectedBook);
         currentUser.setBorrowedBookList(myBookList);
         System.out.println("도서를 반납했습니다.");
-
-//        Book selectedBook = null;
-//        for (Book book : myBookList) {
-//            if (book.getNo() == bookNo) {
-//                selectedBook = book;
-//                break;
-//            }
-//        }
-//
-//        if (selectedBook == null) {
-//            System.out.println("해당 번호의 도서를 찾을 수 없습니다.");
-//            return;
-//        }
-//
-//        if (selectedBook.isBorrowed()) {
-//            selectedBook.setBorrowed(false);
-//            selectedBook.setBorrowedDate(null);
-//            currentUser.getBorrowedBookList().remove(selectedBook);
-//            System.out.println("도서를 반납했습니다.");
-//        } else {
-//            System.out.println("해당 도서는 대출 중이 아닙니다.");
-//        }
     }
 
     public void newBooks() {
         int month = Prompt.inputInt("월?");
         System.out.printf("[%d월 신간도서]\n", month);
-        System.out.println("번호    분류    도서명          대출여부");
+        System.out.printf("번호%s분류%s도서명%s대출여부\n",
+            Prompt.getSpaces(8, "번호"),
+            Prompt.getSpaces(12, "분류"),
+            Prompt.getSpaces(20, "도서명")
+        );
+
         int count = 0;
         for (Book book : bookList) {
             if (book.getRegisteredDate().getMonthValue() == month) {
-                System.out.printf("%d       %s    %s      %s\n",
-                    book.getNo(), book.getCategory(), book.getName(),
+                System.out.printf("%d%s%s%s%s%s%s\n",
+                    book.getNo(), Prompt.getSpaces(8, String.valueOf(book.getNo())),
+                    book.getCategory(), Prompt.getSpaces(12, book.getCategory()),
+                    book.getName(), Prompt.getSpaces(20, book.getName()),
                     book.isBorrowed() ? (book.isReserved() ? "예약중" : "대출중") : "대출가능");
                 count++;
             }
@@ -192,24 +183,51 @@ public class LibraryCommand extends AbstractCommand {
     }
 
     private void listMyBook(List<Book> myBookList) {
-        System.out.println("번호    분류    도서명    대출일    반납예정일    상태");
+        String borrowDate = "";
+        String returnDate = "";
+
+        System.out.printf("번호%s분류%s도서명%s대출일%s반납예정일%s상태\n",
+            Prompt.getSpaces(8, "번호"),
+            Prompt.getSpaces(12, "분류"),
+            Prompt.getSpaces(20, "도서명"),
+            Prompt.getSpaces(12, "대출일"),
+            Prompt.getSpaces(12, "반납예정일")
+        );
         for(Book book : myBookList) {
-            System.out.printf("%d    %s    %s    %s    %s    %s\n", book.getNo(), book.getCategory(),
-                book.getName(), book.getBorrowedDate(), book.getBorrowedDate().plusDays(14),
+            borrowDate = String.valueOf(book.getBorrowedDate());
+            returnDate = String.valueOf(book.getBorrowedDate().plusDays(14));
+            System.out.printf("%d%s%s%s%s%s%s%s%s%s%s\n",
+                book.getNo(), Prompt.getSpaces(8, String.valueOf(book.getNo())),
+                book.getCategory(), Prompt.getSpaces(12, book.getCategory()),
+                book.getName(), Prompt.getSpaces(20, book.getName()),
+                borrowDate, Prompt.getSpaces(12, borrowDate),
+                returnDate, Prompt.getSpaces(12, returnDate),
                 book.isOverdue() ? "연체" : "정상");
         }
     }
 
     public void listEntireBook() {
-        System.out.println("번호   분류     도서명     저자    대출상태    대출일    반납예정일");
+        System.out.printf("번호%s분류%s도서명%s저자%s대출상태%s대출일%s반납예정일\n",
+            Prompt.getSpaces(8, "번호"),
+            Prompt.getSpaces(12, "분류"),
+            Prompt.getSpaces(20, "도서명"),
+            Prompt.getSpaces(16, "저자"),
+            Prompt.getSpaces(12, "대출상태"),
+            Prompt.getSpaces(12, "대출일")
+        );
         for (Book book : bookList) {
             String borrowStatus = book.isBorrowed() ? "대출중" : (book.isReserved() ? "예약중" : "대출가능");
             String borrowedDate = book.getBorrowedDate() != null ? book.getBorrowedDate().toString() : "-";
             String returnDate = book.getBorrowedDate() != null ? book.getBorrowedDate().plusDays(14).toString() : "-";
 
-            System.out.printf("%d    %s    %s    %s    %s    %s    %s\n",
-                    book.getNo(), book.getCategory(), book.getName(), book.getAuthor(),
-                    borrowStatus, borrowedDate, returnDate
+            System.out.printf("%d%s%s%s%s%s%s%s%s%s%s%s%s\n",
+                book.getNo(), Prompt.getSpaces(8, String.valueOf(book.getNo())),
+                book.getCategory(), Prompt.getSpaces(12, book.getCategory()),
+                book.getName(), Prompt.getSpaces(20, book.getName()),
+                book.getAuthor(), Prompt.getSpaces(16, book.getAuthor()),
+                borrowStatus, Prompt.getSpaces(12, borrowStatus),
+                borrowedDate, Prompt.getSpaces(12, borrowedDate),
+                returnDate
             );
         }
     }

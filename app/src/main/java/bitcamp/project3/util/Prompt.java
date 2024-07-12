@@ -4,6 +4,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Prompt {
 
@@ -84,5 +86,18 @@ public class Prompt {
   public static void printDeleteComplete(String name, String type) {
     System.out.printf("'%s' %s을 삭제 했습니다.\n", name, type);
     loading(1000);
+  }
+
+  public static String getSpaces(int length, String str) {
+    int count = 0;
+    count += str.length();
+
+    Pattern pattern = Pattern.compile("[가-힣]");
+    Matcher matcher = pattern.matcher(str);
+    while (matcher.find()) {
+      count++;
+    }
+
+    return " ".repeat(length - count);
   }
 }

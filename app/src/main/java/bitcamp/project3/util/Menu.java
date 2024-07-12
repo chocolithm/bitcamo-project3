@@ -249,7 +249,7 @@ public class Menu {
   public class DummyData {
     public void addDummyUser() {
       User user;
-      user = new User("root", "0000", "관리자", true, LocalDate.now(), new ArrayList<>());
+      user = new User("root", "0000", "엄진영", true, LocalDate.now(), new ArrayList<>());
       userList.add(user);
       user = new User("test", "0000", "백현기", false, LocalDate.now(), new ArrayList<>());
       userList.add(user);

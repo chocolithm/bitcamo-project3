@@ -70,10 +70,18 @@ public class BookCommand extends AbstractCommand {
 
 
     private void listBook() {
-        System.out.println("번호 제목 저자 카테고리");
+        System.out.printf("번호%s제목%s저자%s카테고리\n",
+            Prompt.getSpaces(8, "번호"),
+            Prompt.getSpaces(20, "제목"),
+            Prompt.getSpaces(16, "저자")
+        );
         for (Book book : bookList) {
-            System.out.printf("%d %s %s %s\n",
-                    book.getNo(), book.getName(), book.getAuthor(), book.getCategory());
+            System.out.printf("%d%s%s%s%s%s%s\n",
+                book.getNo(), Prompt.getSpaces(8, String.valueOf(book.getNo())),
+                book.getName(), Prompt.getSpaces(20, book.getName()),
+                book.getAuthor(), Prompt.getSpaces(16, book.getAuthor()),
+                book.getCategory()
+            );
         }
     }
 

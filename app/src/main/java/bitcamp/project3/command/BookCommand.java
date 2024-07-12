@@ -45,10 +45,19 @@ public class BookCommand extends AbstractCommand {
         int index = bookList.indexOf(new Book(bookNo));
         if (index == -1) {
             System.out.println("없는 책 입니다.");
+            Prompt.loading(1000);
             return;
         }
 
-        Book deletedBook = bookList.remove(index);
+        Book deletedBook = bookList.get(index);
+
+        if(deletedBook.isBorrowed()) {
+            System.out.println("대출 중인 도서는 삭제할 수 없습니다.");
+            Prompt.loading(1000);
+            return;
+        }
+
+        bookList.remove(index);
         Prompt.printDeleteComplete(deletedBook.getName(), "책");
     }
 
@@ -57,6 +66,7 @@ public class BookCommand extends AbstractCommand {
         int index = bookList.indexOf(new Book(bookNo));
         if (index == -1) {
             System.out.println("없는 책 입니다.");
+            Prompt.loading(1000);
             return;
         }
 
@@ -83,6 +93,7 @@ public class BookCommand extends AbstractCommand {
                 book.getCategory()
             );
         }
+        Prompt.loading(1000);
     }
 
     private void addBook() {

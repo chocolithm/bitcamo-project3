@@ -1,5 +1,6 @@
 package bitcamp.project3.command;
 
+import bitcamp.project3.util.Login;
 import bitcamp.project3.util.Prompt;
 import bitcamp.project3.vo.User;
 import java.time.LocalDate;
@@ -26,7 +27,6 @@ public class UserCommand extends AbstractCommand {
     switch (menuName) {
       case "목록":
         this.listUser();
-        Prompt.loading(1000);
         break;
       case "수정":
         this.updateUser();
@@ -69,6 +69,7 @@ public class UserCommand extends AbstractCommand {
           user.isAdmin() ? "부여" : ""
       );
     }
+    Prompt.loading(1000);
   }
 
   private void updateUser() {
@@ -113,13 +114,29 @@ public class UserCommand extends AbstractCommand {
   private void deleteUser() {
     String userId = Prompt.input("ID?");
     int index = userList.indexOf(new User(userId));
+
     if (index == -1) {
       System.out.println("없는 회원입니다.");
       Prompt.loading(1000);
       return;
     }
 
-    User deletedUser = userList.remove(index);
+    String currentUserId = Login.getInstance().getId();
+    User deletedUser = userList.get(index);
+
+    if(deletedUser.getId().equals(currentUserId)) {
+      System.out.println("본인은 삭제할 수 없습니다.");
+      Prompt.loading(1000);
+      return;
+    }
+
+    if(!deletedUser.getBorrowedBookList().isEmpty()) {
+      System.out.println("현재 대출 중인 회원은 삭제할 수 없습니다.");
+      Prompt.loading(1000);
+      return;
+    }
+
+    userList.remove(index);
     Prompt.printDeleteComplete(deletedUser.getName(), "회원");
   }
 }

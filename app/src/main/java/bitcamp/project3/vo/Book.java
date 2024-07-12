@@ -137,6 +137,8 @@ public class Book {
     public void returnBook() {
         this.borrowedBy = null;
         this.borrowedDate = null;
+        this.reservedBy = null;
+        this.reserved = false;
     }
 
     @Override

@@ -45,7 +45,7 @@ public class Prompt {
   }
 
   public static void printBuff() {
-    for(int i = 0; i < 35; i++) {
+    for(int i = 0; i < 55; i++) {
       System.out.println();
     }
   }

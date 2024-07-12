@@ -52,8 +52,6 @@ public class Menu {
 
     //loginMenu
     for (;;) {
-      Prompt.printBuff();
-
       printLoginTUI();
 
       for(int i = 0; i < loginMenu.length; i++) {
@@ -112,6 +110,7 @@ public class Menu {
   public void mainMenu() {
     menuPath.push("메인");
     if(loginUser.isAdmin()) {
+      printAdminMainTUI();
       adminMainMenu();
     } else {
       printUserMainTUI();
@@ -174,6 +173,8 @@ public class Menu {
         "|      도서관에 오신 것을 환영합니다.      |\n" +
         "|                                          |\n" +
         "|------------------------------------------|\n";
+
+    Prompt.printBuff();
     System.out.println(str);
   }
 
@@ -186,6 +187,8 @@ public class Menu {
         getOverdueList() +
         "                                            \n" +
         "|------------------------------------------|\n";
+
+    Prompt.printBuff();
     System.out.println(str);
   }
 
@@ -221,7 +224,26 @@ public class Menu {
   }
 
   private void printAdminMainTUI() {
+    String welcome = String.format("'%s'님 환영합니다.\n", loginUser.getName());
+    String str =
+        "|------------------------------------------|\n" +
+        "                                            \n" +
+        welcome +
+        getTotalUser() +
+        getTotalBook() +
+        "                                            \n" +
+        "|------------------------------------------|\n";
 
+    Prompt.printBuff();
+    System.out.println(str);
+  }
+
+  private String getTotalUser() {
+    return String.format("전체 사용자 : %d명\n", userList.size());
+  }
+
+  private String getTotalBook() {
+    return String.format("전체 도서 수 : %d권\n", bookList.size());
   }
 
   public class DummyData {
@@ -229,9 +251,9 @@ public class Menu {
       User user;
       user = new User("root", "0000", "관리자", true, LocalDate.now(), new ArrayList<>());
       userList.add(user);
-      user = new User("test", "0000", "사용자1", false, LocalDate.now(), new ArrayList<>());
+      user = new User("test", "0000", "백현기", false, LocalDate.now(), new ArrayList<>());
       userList.add(user);
-      user = new User("test2", "0000", "사용자2", false, LocalDate.now(), new ArrayList<>());
+      user = new User("test2", "0000", "강윤상", false, LocalDate.now(), new ArrayList<>());
       userList.add(user);
     }
 
@@ -242,6 +264,10 @@ public class Menu {
       book = new Book(Book.getNextSeqNo(), "군주론", "마키아벨리", "인문", null, null, LocalDate.of(2024, 6, 25), null);
       bookList.add(book);
       book = new Book(Book.getNextSeqNo(), "자바의신", "엄진영", "컴퓨터과학", null, null, LocalDate.of(2024, 6, 20), null);
+      bookList.add(book);
+      book = new Book(Book.getNextSeqNo(), "이것이 자바다", "신용권", "컴퓨터과학", null, null, LocalDate.of(2024, 7, 2), null);
+      bookList.add(book);
+      book = new Book(Book.getNextSeqNo(), "Design Pattern", "에릭 프리먼", "컴퓨터과학", null, null, LocalDate.of(2024, 7, 8), null);
       bookList.add(book);
     }
 

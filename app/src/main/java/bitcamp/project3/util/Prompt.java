@@ -67,7 +67,6 @@ public class Prompt {
   public static void printNumberException() {
     System.out.println("유효한 숫자를 입력해주세요.");
     loading(1000);
-    printBuff();
   }
 
   public static void printProgramExit() {
@@ -79,19 +78,16 @@ public class Prompt {
   public static void printAddComplete() {
     System.out.println("등록됐습니다.");
     loading(1000);
-    printBuff();
   }
 
   public static void printUpdateComplete() {
     System.out.println("수정됐습니다.");
     loading(1000);
-    printBuff();
   }
 
   public static void printDeleteComplete(String name, String type) {
     System.out.printf("'%s' %s을 삭제 했습니다.\n", name, type);
     loading(1000);
-    printBuff();
   }
 
   public static String getSpaces(int length, String str) {

@@ -26,6 +26,7 @@ public class UserCommand extends AbstractCommand {
     switch (menuName) {
       case "목록":
         this.listUser();
+        Prompt.loading(1000);
         break;
       case "수정":
         this.updateUser();

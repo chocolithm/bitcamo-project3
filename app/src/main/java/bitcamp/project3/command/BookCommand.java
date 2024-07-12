@@ -65,11 +65,10 @@ public class BookCommand extends AbstractCommand {
         int bookNo = Prompt.inputInt("책 번호?");
         int index = bookList.indexOf(new Book(bookNo));
         if (index == -1) {
-            System.out.println("없는 책 입니다.");
+            System.out.println("없는 책입니다.");
             Prompt.loading(1000);
             return;
         }
-
 
         Book book = bookList.get(index);
         String[] updateMenu = {"제목", "저자", "카테고리"};
@@ -91,10 +90,8 @@ public class BookCommand extends AbstractCommand {
                 Prompt.loading(1000);
                 return;
         }
-
         Prompt.printUpdateComplete();
     }
-
 
     private void listBook() {
         System.out.printf("번호%s제목%s저자%s카테고리\n",

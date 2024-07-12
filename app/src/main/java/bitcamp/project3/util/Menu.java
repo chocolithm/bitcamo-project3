@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 import java.time.temporal.ChronoUnit;
+import org.checkerframework.checker.units.qual.A;
 
 public class Menu {
   String[] loginMenu = {"로그인", "회원가입"};
@@ -177,7 +178,7 @@ public class Menu {
   }
 
   private void printUserMainTUI() {
-    String welcome = String.format("            '%s'님 환영합니다.\n", loginUser.getName());
+    String welcome = String.format("'%s'님 환영합니다.\n", loginUser.getName());
     String str =
         "|------------------------------------------|\n" +
         "                                            \n" +
@@ -189,7 +190,7 @@ public class Menu {
   }
 
   private String getOverdueList() {
-    StringBuilder str = new StringBuilder();
+    String str = "\n";
     User currentUser = new User();
     currentUser.setId(loginUser.getId());
     for(User user : userList) {
@@ -207,16 +208,16 @@ public class Menu {
     }
 
     if(!delayedBookList.isEmpty()) {
-      str.append("              *** 연체도서 확인 ***\n");
+      str += Ansi.RED + "*** 연체도서 확인 ***" + Ansi.RESET + "\n";
       for(Book book : delayedBookList) {
         String title = book.getName();
         LocalDate returnDate = book.getReturnDate();
         long overdueDate = ChronoUnit.DAYS.between(returnDate, LocalDate.now());
-        str.append(String.format("            '%s' %d일 연체\n", title, overdueDate));
+        str += String.format("'%s' %d일 연체\n", title, overdueDate);
       }
     }
 
-    return str.toString();
+    return str;
   }
 
   private void printAdminMainTUI() {

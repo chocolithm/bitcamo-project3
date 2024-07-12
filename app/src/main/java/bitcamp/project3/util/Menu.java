@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
+import java.time.temporal.ChronoUnit;
 
 public class Menu {
   String[] loginMenu = {"로그인", "회원가입"};
@@ -112,6 +113,7 @@ public class Menu {
     if(loginUser.isAdmin()) {
       adminMainMenu();
     } else {
+      printUserMainTUI();
       userMainMenu();
     }
   }
@@ -175,7 +177,46 @@ public class Menu {
   }
 
   private void printUserMainTUI() {
+    String welcome = String.format("            '%s'님 환영합니다.\n", loginUser.getName());
+    String str =
+        "|------------------------------------------|\n" +
+        "                                            \n" +
+        welcome +
+        getOverdueList() +
+        "                                            \n" +
+        "|------------------------------------------|\n";
+    System.out.println(str);
+  }
 
+  private String getOverdueList() {
+    StringBuilder str = new StringBuilder();
+    User currentUser = new User();
+    currentUser.setId(loginUser.getId());
+    for(User user : userList) {
+      if(user.equals(currentUser)) {
+        currentUser = user;
+      }
+    }
+
+    List<Book> myBookList = currentUser.getBorrowedBookList();
+    List<Book> delayedBookList = new ArrayList<>();
+    for (Book book : myBookList) {
+      if(book.isOverdue()) {
+        delayedBookList.add(book);
+      }
+    }
+
+    if(!delayedBookList.isEmpty()) {
+      str.append("              *** 연체도서 확인 ***\n");
+      for(Book book : delayedBookList) {
+        String title = book.getName();
+        LocalDate returnDate = book.getReturnDate();
+        long overdueDate = ChronoUnit.DAYS.between(returnDate, LocalDate.now());
+        str.append(String.format("            '%s' %d일 연체\n", title, overdueDate));
+      }
+    }
+
+    return str.toString();
   }
 
   private void printAdminMainTUI() {
@@ -216,6 +257,7 @@ public class Menu {
       dummyBookList.add(book);
       dummyBookList.getFirst().setBorrowedBy(user);
       dummyBookList.getFirst().setBorrowed(true);
+      dummyBookList.getFirst().setBorrowedDate(LocalDate.of(2024, 6, 10));
       myBookList.add(book);
       user.setBorrowedBookList(myBookList);
 
@@ -226,6 +268,7 @@ public class Menu {
       dummyBookList.add(book);
       dummyBookList.getFirst().setBorrowedBy(user);
       dummyBookList.getFirst().setBorrowed(true);
+      dummyBookList.getFirst().setBorrowedDate(LocalDate.of(2024, 6, 15));
       myBookList.add(book);
       user.setBorrowedBookList(myBookList);
     }

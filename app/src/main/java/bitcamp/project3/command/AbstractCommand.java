@@ -13,7 +13,9 @@ public abstract class AbstractCommand implements Command {
 
   @Override
   public void execute(Stack<String> menuPath) {
-    menuPath.push(menuTitle);
+    if(!menuTitle.isEmpty()) {
+      menuPath.push(menuTitle);
+    }
 
     printMenus();
 
@@ -52,7 +54,7 @@ public abstract class AbstractCommand implements Command {
     for (int i = 0; i < menus.length; i++) {
       System.out.printf("%d. %s\n", (i + 1), menus[i]);
     }
-    System.out.println("0. 이전");
+    System.out.println("0. 로그아웃");
   }
 
   private String getMenuTitle(int menuNo) {

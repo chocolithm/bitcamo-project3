@@ -209,18 +209,20 @@ public class LibraryCommand extends AbstractCommand {
 
             System.out.printf("%d    %s    %s    %s    %s    %s    %s\n",
                     book.getNo(), book.getCategory(), book.getName(), book.getAuthor(),
-                    borrowStatus, borrowedDate, returnDate
-            );
+                    borrowStatus, borrowedDate, returnDate);
         }
     }
 
     public void showGuide() {
         String str =
-                                            "[이용 안내]\n" +
-                        "안녕하세요! \uD83D\uDE0A 대출관리시스템에 오신 것을 환영합니다!\n" +
-                        "신청 방법: 로그인 후 ‘도서 대출’ 메뉴에서 쉽게 대여 하세요!\n" +
-                        "반납 기한: 대출일로부터 14일 이내에 반납해주세요.\n" +
-                        "궁금한 점이 있으면 언제든지 고객센터(1234-5678)로 연락해 주세요";
+                        "[이용 안내]\n" +
+                                "안녕하세요! \uD83D\uDE0A 대출관리시스템에 오신 것을 환영합니다!\n" +
+                                "신청 방법: 로그인 후 ‘도서 대출’ 메뉴에서 쉽게 대여 하세요!\n" +
+                                "반납 기한: 대출일로부터 14일 이내에 반납해주세요.\n" + "" +
+                                "Tip: 보고 싶은 도서는 미리 예약해두면 더욱 편리해요!\n"+
+                                "언제나 여러분의 독서를 응원합니다!\n" +
+                                "궁금한 점이 있으면 언제든지 고객센터(1234-5678)로 연락해 주세요";
+
         System.out.println(str);
     }
 }

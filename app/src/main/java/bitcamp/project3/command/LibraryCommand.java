@@ -36,7 +36,7 @@ public class LibraryCommand extends AbstractCommand {
                 this.returnBook();
                 break;
             case "신간도서":
-//                this.newBooks();
+                this.newBooks();
                 break;
             case "대출현황":
 //                this.showStatus();
@@ -81,26 +81,7 @@ public class LibraryCommand extends AbstractCommand {
             return;
         }
 
-        if (!selectedBook.isBorrowed()) {
-            selectedBook.setBorrowed(true);
-            selectedBook.setBorrowedDate(LocalDate.now());
-
-            List<Book> myBookList = currentUser.getBorrowedBookList();
-            myBookList.add(selectedBook);
-            currentUser.setBorrowedBookList(myBookList);
-
-            System.out.println("대출되었습니다.");
-        } else if (selectedBook.isReserved()) {
-            System.out.println("예약중인 도서입니다. 대출이 불가합니다.");
-        } else {
-            System.out.println("대출 중인 도서입니다. 예약하시겠습니까? (y/n)");
-            String answer = Prompt.input("선택 (y/n)");
-            if (answer.equalsIgnoreCase("y")) {
-                selectedBook.setReserved(true);
-                selectedBook.setReservedBy(currentUser);
-                System.out.println("예약되었습니다.");
-            }
-        }
+        borrowBook(selectedBook);
     }
 
     private void returnBook() {
@@ -142,6 +123,67 @@ public class LibraryCommand extends AbstractCommand {
 //        } else {
 //            System.out.println("해당 도서는 대출 중이 아닙니다.");
 //        }
+    }
+
+    public void newBooks() {
+        int month = Prompt.inputInt("월?");
+        System.out.printf("[%d월 신간도서]\n", month);
+        System.out.println("번호    분류    도서명          대출여부");
+        int count = 0;
+        for (Book book : bookList) {
+            if (book.getRegisteredDate().getMonthValue() == month) {
+                System.out.printf("%d       %s    %s      %s\n",
+                    book.getNo(), book.getCategory(), book.getName(),
+                    book.isBorrowed() ? (book.isReserved() ? "예약중" : "대출중") : "대출가능");
+                count++;
+            }
+        }
+
+        if (count == 0) {
+            System.out.println("검색 결과가 없습니다.");
+            return;
+        }
+
+        int bookNo = Prompt.inputInt("도서 번호(0 이전)?");
+        if (bookNo == 0) return;
+
+        Book selectedBook = null;
+        for (Book book : bookList) {
+            if (book.getNo() == bookNo) {
+                selectedBook = book;
+                break;
+            }
+        }
+
+        if (selectedBook == null) {
+            System.out.println("잘못된 도서 번호입니다.");
+            return;
+        }
+
+        borrowBook(selectedBook);
+    }
+
+    public void borrowBook(Book selectedBook) {
+        if (!selectedBook.isBorrowed()) {
+            selectedBook.setBorrowed(true);
+            selectedBook.setBorrowedDate(LocalDate.now());
+
+            List<Book> myBookList = currentUser.getBorrowedBookList();
+            myBookList.add(selectedBook);
+            currentUser.setBorrowedBookList(myBookList);
+
+            System.out.println("대출되었습니다.");
+        } else if (selectedBook.isReserved()) {
+            System.out.println("예약중인 도서입니다. 대출이 불가합니다.");
+        } else {
+            System.out.println("대출 중인 도서입니다. 예약하시겠습니까? (y/n)");
+            String answer = Prompt.input("선택 (y/n)");
+            if (answer.equalsIgnoreCase("y")) {
+                selectedBook.setReserved(true);
+                selectedBook.setReservedBy(currentUser);
+                System.out.println("예약되었습니다.");
+            }
+        }
     }
 
     private void listMyBook(List<Book> myBookList) {

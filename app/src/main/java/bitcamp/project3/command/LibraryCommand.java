@@ -12,7 +12,7 @@ public class LibraryCommand extends AbstractCommand {
     private List<Book> bookList;
     private List<User> userList;
     private User currentUser;
-    private String[] menus = {"도서대출", "도서반납", "신간도서", "대출현황", "이용안내"};
+    private String[] menus = {"도서대출", "도서반납", "신간도서", "전체도서목록", "이용안내"};
 
     public LibraryCommand(String menuTitle, List<Book> bookList, List<User> userList, User currentUser) {
         super(menuTitle);
@@ -38,8 +38,8 @@ public class LibraryCommand extends AbstractCommand {
             case "신간도서":
                 this.newBooks();
                 break;
-            case "대출현황":
-//                this.showStatus();
+            case "전체도서목록":
+                this.listEntireBook();
                 break;
             case "이용안내":
 //                this.showGuide();
@@ -197,6 +197,25 @@ public class LibraryCommand extends AbstractCommand {
             System.out.printf("%d    %s    %s    %s    %s    %s\n", book.getNo(), book.getCategory(),
                 book.getName(), book.getBorrowedDate(), book.getBorrowedDate().plusDays(14),
                 book.isOverdue() ? "연체" : "정상");
+        }
+    }
+
+    public void listEntireBook() {
+        System.out.println("번호   분류     도서명     저자    대출상태    대출일    반납예정일");
+        for (Book book : bookList) {
+            String borrowStatus = book.isBorrowed() ? "대출중" : (book.isReserved() ? "예약중" : "대출가능");
+            String borrowedDate = book.getBorrowedDate() != null ? book.getBorrowedDate().toString() : "-";
+            String returnDate = book.getBorrowedDate() != null ? book.getBorrowedDate().plusDays(14).toString() : "-";
+
+            System.out.printf("%d    %s    %s    %s    %s    %s    %s\n",
+                    book.getNo(),
+                    book.getCategory(),
+                    book.getName(),
+                    book.getAuthor(),
+                    borrowStatus,
+                    borrowedDate,
+                    returnDate
+            );
         }
     }
 }

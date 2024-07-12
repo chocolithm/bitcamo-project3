@@ -89,7 +89,11 @@ public class LibraryCommand extends AbstractCommand {
 
         listMyBook(myBookList);
 
-        int bookNo = Prompt.inputInt("반납할 도서 번호?");
+        int bookNo = Prompt.inputInt("반납할 도서 번호?(0 이전)");
+        if(bookNo == 0) {
+            return;
+        }
+
         Book selectedBook = new Book(bookNo);
         if (!myBookList.contains(selectedBook)) {
             System.out.println("해당 도서는 대출 중이 아닙니다.");
@@ -166,6 +170,7 @@ public class LibraryCommand extends AbstractCommand {
     public void borrowBook(Book selectedBook) {
         if (!selectedBook.isBorrowed()) {
             selectedBook.setBorrowed(true);
+            selectedBook.setBorrowedBy(currentUser);
             selectedBook.setBorrowedDate(LocalDate.now());
 
             List<Book> myBookList = currentUser.getBorrowedBookList();

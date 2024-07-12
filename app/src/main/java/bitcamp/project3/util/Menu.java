@@ -24,6 +24,13 @@ public class Menu {
   BookCommand bookCommand = new BookCommand("도서관리", bookList);
   LibraryCommand libraryCommand;
 
+  private static final String LOGIN = "1";
+  private static final String JOIN = "2";
+  private static final String EXIT = "0";
+
+  private static final String USER = "1";
+  private static final String BOOK = "2";
+
   Menu() {
 
   }
@@ -43,13 +50,8 @@ public class Menu {
   }
 
   public void menu() {
-    //dummy
-    DummyData dummy = new DummyData();
-    dummy.addDummyUser();
-    dummy.addDummyBook();
-    dummy.borrowDummy();
+    new DummyData().addDummy();
 
-    //loginMenu
     for (;;) {
       printLoginTUI();
 
@@ -59,15 +61,15 @@ public class Menu {
       System.out.println("0. 종료");
 
       switch (Prompt.input("%s>", getMenuPathTitle(menuPath))){
-        case "1": //login
+        case LOGIN:
           if(login()){
             mainMenu();
           }
           continue;
-        case "2": //join
+        case JOIN:
           userCommand.addUser();
           continue;
-        case "0":
+        case EXIT:
           Prompt.printProgramExit();
           return;
         default:
@@ -125,13 +127,13 @@ public class Menu {
       System.out.println("0. 로그아웃");
 
       switch (Prompt.input("%s>", getMenuPathTitle(menuPath))) {
-        case "1":
+        case USER:
           userCommand.execute(menuPath);
           continue;
-        case "2":
+        case BOOK:
           bookCommand.execute(menuPath);
           continue;
-        case "0":
+        case EXIT:
           Logout.performLogout();
           this.loginUser = null;
           menuPath.pop();
@@ -199,21 +201,36 @@ public class Menu {
     }
 
     List<Book> myBookList = currentUser.getBorrowedBookList();
-    List<Book> delayedBookList = new ArrayList<>();
+    List<Book> overdueBookList = calcOverdueBookList(myBookList);
+
+    if(!overdueBookList.isEmpty()) {
+      str += printOverdueBookList(overdueBookList);
+    }
+
+    return str;
+  }
+
+  private List<Book> calcOverdueBookList(List<Book> myBookList) {
+    List<Book> overdueBookList = new ArrayList<>();
+
     for (Book book : myBookList) {
       if(book.isOverdue()) {
-        delayedBookList.add(book);
+        overdueBookList.add(book);
       }
     }
 
-    if(!delayedBookList.isEmpty()) {
-      str += Ansi.RED + "*** 연체도서 확인 ***" + Ansi.RESET + "\n";
-      for(Book book : delayedBookList) {
-        String title = book.getName();
-        LocalDate returnDate = book.getReturnDate();
-        long overdueDate = ChronoUnit.DAYS.between(returnDate, LocalDate.now());
-        str += String.format("'%s' %d일 연체\n", title, overdueDate);
-      }
+    return overdueBookList;
+  }
+
+  private String printOverdueBookList(List<Book> overdueBookList) {
+    String str = "";
+
+    str += Ansi.RED + "*** 연체도서 확인 ***" + Ansi.RESET + "\n";
+    for(Book book : overdueBookList) {
+      String title = book.getName();
+      LocalDate returnDate = book.getReturnDate();
+      long overdueDate = ChronoUnit.DAYS.between(returnDate, LocalDate.now());
+      str += String.format("'%s' %d일 연체\n", title, overdueDate);
     }
 
     return str;
@@ -243,6 +260,12 @@ public class Menu {
   }
 
   public class DummyData {
+    public void addDummy() {
+      addDummyUser();
+      addDummyBook();
+      borrowDummy();
+    }
+
     public void addDummyUser() {
       User user;
       user = new User("root", "0000", "엄진영", true, LocalDate.now(), new ArrayList<>());

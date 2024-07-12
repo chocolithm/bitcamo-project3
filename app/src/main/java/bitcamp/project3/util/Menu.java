@@ -12,7 +12,6 @@ import java.util.Stack;
 
 public class Menu {
   String[] loginMenu = {"로그인", "회원가입"};
-  String[] userMainMenu = {"도서검색", "신간도서", "대출현황", "이용안내"};
   String[] adminMainMenu = {"사용자관리", "도서관리", "대출기록"};
   Login loginUser;
   Stack<String> menuPath = new Stack<>();
@@ -51,6 +50,10 @@ public class Menu {
 
     //loginMenu
     for (;;) {
+      Prompt.printBuff();
+
+      printLoginTUI();
+
       for(int i = 0; i < loginMenu.length; i++) {
         System.out.printf("%d. %s\n", (i + 1), loginMenu[i]);
       }
@@ -66,7 +69,7 @@ public class Menu {
           userCommand.addUser();
           continue;
         case "0":
-          System.out.println("시스템을 종료합니다.");
+          Prompt.printProgramExit();
           return;
         default:
           Prompt.printNumberException();
@@ -82,7 +85,7 @@ public class Menu {
     user.setId(id);
 
     if(!userList.contains(user)) {
-      System.out.println("로그인 정보를 확인하세요.");
+      Prompt.printLoginException();
       return false;
     }
 
@@ -99,7 +102,7 @@ public class Menu {
       loginUser = login;
       return true;
     } else {
-      System.out.println("로그인 정보를 확인하세요.");
+      Prompt.printLoginException();
       return false;
     }
   }
@@ -143,34 +146,6 @@ public class Menu {
 
   public void userMainMenu() {
     libraryCommand.execute(menuPath);
-//    for (;;) {
-//      for(int i = 0; i < userMainMenu.length; i++) {
-//        System.out.printf("%d. %s\n", (i + 1), userMainMenu[i]);
-//      }
-//      System.out.println("0. 로그아웃");
-//
-//      switch (Prompt.input("%s>", getMenuPathTitle(menuPath))){
-//        case "1":
-//
-//          continue;
-//        case "2":
-//          System.out.println("신간도서");
-//          continue;
-//        case "3":
-//          System.out.println("대출현황");
-//          continue;
-//        case "4":
-//          System.out.println("이용안내");
-//          continue;
-//        case "0":
-//          Logout.performLogout();
-//          this.loginUser = null;
-//          menuPath.pop();
-//          return;
-//        default:
-//          Prompt.printNumberException();
-//      }
-//    }
   }
 
   private String getMenuPathTitle(Stack<String> menuPath) {
@@ -182,6 +157,29 @@ public class Menu {
       strBuilder.append(menuPath.get(i));
     }
     return strBuilder.toString();
+  }
+
+  private void printLoginTUI() {
+    String str =
+        "|------------------------------------------|\n" +
+        "|         _____  _____  _____  __  __      |\n" +
+        "|        / _  / /    / /    / / / / /      |\n" +
+        "|       /   _/ / // / / // / / /_/ /       |\n" +
+        "|      / _  | / // / / // / / / \\ \\        |\n" +
+        "|     /____/ /____/ /____/ /_/   \\_\\       |\n" +
+        "|                                          |\n" +
+        "|      도서관에 오신 것을 환영합니다.      |\n" +
+        "|                                          |\n" +
+        "|------------------------------------------|\n";
+    System.out.println(str);
+  }
+
+  private void printUserMainTUI() {
+
+  }
+
+  private void printAdminMainTUI() {
+
   }
 
   public class DummyData {

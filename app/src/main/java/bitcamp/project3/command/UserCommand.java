@@ -51,8 +51,7 @@ public class UserCommand extends AbstractCommand {
     user.setBorrowedBookList(new ArrayList<>());
     userList.add(user);
 
-    System.out.println("등록되었습니다.");
-    Prompt.loading(1000);
+    Prompt.printAddComplete();
   }
 
   private void listUser() {
@@ -98,8 +97,7 @@ public class UserCommand extends AbstractCommand {
         Prompt.loading(1000);
     }
 
-    System.out.println("변경 했습니다.");
-    Prompt.loading(1000);
+    Prompt.printUpdateComplete();
   }
 
   private void deleteUser() {
@@ -112,7 +110,6 @@ public class UserCommand extends AbstractCommand {
     }
 
     User deletedUser = userList.remove(index);
-    System.out.printf("'%s' 회원을 삭제 했습니다.\n", deletedUser.getName());
-    Prompt.loading(1000);
+    Prompt.printDeleteComplete(deletedUser.getName(), "회원");
   }
 }

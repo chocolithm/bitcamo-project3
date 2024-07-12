@@ -47,7 +47,7 @@ public class BookCommand extends AbstractCommand {
         }
 
         Book deletedBook = bookList.remove(index);
-        System.out.printf("%d번 책을 삭제 했습니다.\n", deletedBook.getNo());
+        Prompt.printDeleteComplete(deletedBook.getName(), "책");
     }
 
     private void updateBook() {
@@ -63,7 +63,7 @@ public class BookCommand extends AbstractCommand {
         book.setName(Prompt.input("제목(%s)?", book.getName()));
         book.setAuthor(Prompt.input("저자(%s)?", book.getAuthor()));
         book.setCategory(Prompt.input("카테고리(%s)?", book.getCategory()));
-        System.out.println("변경 했습니다.");
+        Prompt.printUpdateComplete();
     }
 
 
@@ -82,6 +82,6 @@ public class BookCommand extends AbstractCommand {
         book.setCategory(Prompt.input("카테고리?"));
         book.setNo(Book.getNextSeqNo());
         bookList.add(book);
+        Prompt.printAddComplete();
     }
-
 }

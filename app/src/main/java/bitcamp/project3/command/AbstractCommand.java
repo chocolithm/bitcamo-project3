@@ -2,6 +2,7 @@ package bitcamp.project3.command;
 
 import bitcamp.project3.util.Prompt;
 import java.util.Stack;
+import org.checkerframework.checker.units.qual.C;
 
 public abstract class AbstractCommand implements Command {
 
@@ -54,7 +55,13 @@ public abstract class AbstractCommand implements Command {
     for (int i = 0; i < menus.length; i++) {
       System.out.printf("%d. %s\n", (i + 1), menus[i]);
     }
-    System.out.println("0. 로그아웃");
+
+    String className = getClass().getSimpleName();
+    if(className.equals("LibraryCommand")) {
+      System.out.println("0. 로그아웃");
+    } else {
+      System.out.println("0. 이전");
+    }
   }
 
   private String getMenuTitle(int menuNo) {

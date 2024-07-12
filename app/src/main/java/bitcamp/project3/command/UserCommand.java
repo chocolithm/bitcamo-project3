@@ -56,7 +56,7 @@ public class UserCommand extends AbstractCommand {
   }
 
   private void listUser() {
-    System.out.printf("ID%s이름%s등록일%s관리자여부\n",
+    System.out.printf("ID%s이름%s등록일%s대출여부\n",
         Prompt.getSpaces(12, "ID"),
         Prompt.getSpaces(12, "이름"),
         Prompt.getSpaces(12, "등록일")
@@ -66,7 +66,7 @@ public class UserCommand extends AbstractCommand {
           user.getId(), Prompt.getSpaces(12, user.getId()),
           user.getName(), Prompt.getSpaces(12, user.getName()),
           user.getJoinDate(), Prompt.getSpaces(12, String.valueOf(user.getJoinDate())),
-          user.isAdmin() ? "부여" : ""
+          user.isAdmin() ? "관리자" : String.format("%d권", user.getBorrowedBookList().size())
       );
     }
     Prompt.loading(1000);

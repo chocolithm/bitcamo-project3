@@ -35,6 +35,7 @@ public abstract class AbstractCommand implements Command {
         String menuName = getMenuTitle(menuNo);
         if (menuName == null) {
           System.out.println("유효한 메뉴 번호가 아닙니다.");
+          Prompt.loading(1000);
           continue;
         }
 
@@ -42,6 +43,7 @@ public abstract class AbstractCommand implements Command {
 
       } catch (NumberFormatException ex) {
         System.out.println("숫자로 메뉴 번호를 입력하세요.");
+        Prompt.loading(1000);
       }
     }
   }

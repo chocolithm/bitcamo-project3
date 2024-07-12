@@ -104,7 +104,7 @@ public class LibraryCommand extends AbstractCommand {
 
         listMyBook(myBookList);
 
-        int bookNo = Prompt.inputInt("반납할 도서 번호?(0 이전)");
+        int bookNo = Prompt.inputInt("반납할 도서 번호(0 이전)?");
         if(bookNo == 0) {
             return;
         }
@@ -118,7 +118,7 @@ public class LibraryCommand extends AbstractCommand {
         }
 
         if (selectedBook == null || !myBookList.contains(selectedBook)) {
-            System.out.println("해당 도서는 대출 중이 아닙니다.");
+            System.out.println("대출한 도서가 아닙니다.");
             return;
         }
 
@@ -138,8 +138,10 @@ public class LibraryCommand extends AbstractCommand {
         );
 
         int count = 0;
+        List<Book> searchList = new ArrayList<>();
         for (Book book : bookList) {
             if (book.getRegisteredDate().getMonthValue() == month) {
+                searchList.add(book);
                 System.out.printf("%d%s%s%s%s%s%s\n",
                     book.getNo(), Prompt.getSpaces(8, String.valueOf(book.getNo())),
                     book.getCategory(), Prompt.getSpaces(12, book.getCategory()),
@@ -158,7 +160,7 @@ public class LibraryCommand extends AbstractCommand {
         if (bookNo == 0) return;
 
         Book selectedBook = null;
-        for (Book book : bookList) {
+        for (Book book : searchList) {
             if (book.getNo() == bookNo) {
                 selectedBook = book;
                 break;

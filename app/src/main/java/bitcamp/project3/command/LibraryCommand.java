@@ -176,7 +176,7 @@ public class LibraryCommand extends AbstractCommand {
 
             System.out.println("대출되었습니다.");
         } else if (selectedBook.isReserved()) {
-            System.out.println("이미 예약중인 도서입니다. 현재는 예약이 불가합니다.");
+            System.out.println("예약중인 도서입니다. 대출이 불가합니다.");
         } else {
             System.out.println("대출 중인 도서입니다. 예약하시겠습니까? (y/n)");
             String answer = Prompt.input("선택 (y/n)");

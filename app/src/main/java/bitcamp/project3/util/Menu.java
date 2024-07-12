@@ -78,7 +78,7 @@ public class Menu {
     }
   }
 
-  public boolean login() {
+  private boolean login() {
     String id = Prompt.input("id?");
     String pw = Prompt.input("pw?");
 
@@ -108,7 +108,7 @@ public class Menu {
     }
   }
 
-  public void mainMenu() {
+  private void mainMenu() {
     menuPath.push("메인");
     if(loginUser.isAdmin()) {
       printAdminMainTUI();
@@ -119,7 +119,7 @@ public class Menu {
     }
   }
 
-  public void adminMainMenu() {
+  private void adminMainMenu() {
     for (; ; ) {
       for (int i = 0; i < adminMainMenu.length; i++) {
         System.out.printf("%d. %s\n", (i + 1), adminMainMenu[i]);
@@ -144,7 +144,7 @@ public class Menu {
     }
   }
 
-  public void userMainMenu() {
+  private void userMainMenu() {
     libraryCommand.execute(menuPath);
   }
 
@@ -259,14 +259,14 @@ public class Menu {
     return String.format("전체 도서 수 : %d권\n", bookList.size());
   }
 
-  public class DummyData {
-    public void addDummy() {
+  private class DummyData {
+    private void addDummy() {
       addDummyUser();
       addDummyBook();
       borrowDummy();
     }
 
-    public void addDummyUser() {
+    private void addDummyUser() {
       User user;
       user = new User("root", "0000", "엄진영", true, LocalDate.now(), new ArrayList<>());
       userList.add(user);
@@ -276,7 +276,7 @@ public class Menu {
       userList.add(user);
     }
 
-    public void addDummyBook() {
+    private void addDummyBook() {
       Book book;
       book = new Book(Book.getNextSeqNo(), "인터스텔라", "홍길동", "과학", null, null, LocalDate.of(2024, 7, 10), null);
       bookList.add(book);
@@ -290,7 +290,7 @@ public class Menu {
       bookList.add(book);
     }
 
-    public void borrowDummy() {
+    private void borrowDummy() {
       List<Book> dummyBookList;
       List<Book> myBookList;
       User user;

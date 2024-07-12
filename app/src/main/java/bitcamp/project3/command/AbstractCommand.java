@@ -2,7 +2,6 @@ package bitcamp.project3.command;
 
 import bitcamp.project3.util.Prompt;
 import java.util.Stack;
-import org.checkerframework.checker.units.qual.C;
 
 public abstract class AbstractCommand implements Command {
 
@@ -90,7 +89,6 @@ public abstract class AbstractCommand implements Command {
     return strBuilder.toString();
   }
 
-  // 구체적인 동작은 서브 클래스에서 정의한다.
   protected abstract String[] getMenus();
 
   protected abstract void processMenu(String menuName);

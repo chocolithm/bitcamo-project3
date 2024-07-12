@@ -39,7 +39,7 @@ public class LibraryCommand extends AbstractCommand {
                 Prompt.loading(1000);
                 break;
             case "신간도서":
-                this.newBooks();
+                this.listNewBooks();
                 Prompt.loading(1000);
                 break;
             case "전체도서목록":
@@ -61,21 +61,9 @@ public class LibraryCommand extends AbstractCommand {
             Prompt.getSpaces(20, "도서명")
         );
 
-        int count = 0;
-        List<Book> searchList = new ArrayList<>();
-        for (Book book : bookList) {
-            if (book.getName().toLowerCase().contains(title)) {
-                searchList.add(book);
-                System.out.printf("%d%s%s%s%s%s%s\n",
-                    book.getNo(), Prompt.getSpaces(8, String.valueOf(book.getNo())),
-                    book.getCategory(), Prompt.getSpaces(12, book.getCategory()),
-                    book.getName(), Prompt.getSpaces(20, book.getName()),
-                    book.isBorrowed() ? (book.isReserved() ? "예약중" : "대출중") : "대출가능");
-                count++;
-            }
-        }
+        List<Book> searchList = getSearchListByTitle(title);
 
-        if (count == 0) {
+        if (searchList.isEmpty()) {
             System.out.println("검색 결과가 없습니다.");
             return;
         }
@@ -83,13 +71,7 @@ public class LibraryCommand extends AbstractCommand {
         int bookNo = Prompt.inputInt("도서 번호(0 이전)?");
         if (bookNo == 0) return;
 
-        Book selectedBook = null;
-        for (Book book : searchList) {
-            if (book.getNo() == bookNo) {
-                selectedBook = book;
-                break;
-            }
-        }
+        Book selectedBook = getSelectedBook(searchList, bookNo);
 
         if (selectedBook == null) {
             System.out.println("잘못된 도서 번호입니다.");
@@ -114,13 +96,7 @@ public class LibraryCommand extends AbstractCommand {
             return;
         }
 
-        Book selectedBook = null;
-        for (Book book : bookList) {
-            if (book.getNo() == bookNo) {
-                selectedBook = book;
-                break;
-            }
-        }
+        Book selectedBook = getSelectedBook(bookList, bookNo);
 
         if (selectedBook == null || !myBookList.contains(selectedBook)) {
             System.out.println("대출한 도서가 아닙니다.");
@@ -131,18 +107,22 @@ public class LibraryCommand extends AbstractCommand {
         currentUser.setBorrowedBookList(myBookList);
 
         if (selectedBook.hasReserbation()) {
-            User reserver = selectedBook.getReservedBy();
-            selectedBook.lendToReservation();
-            List<Book> reserverBookList = reserver.getBorrowedBookList();
-            reserverBookList.add(selectedBook);
-            System.out.println("도서를 반납했습니다. 예약자에게 자동으로 대출 됩니다.");
+            processBorrowForReserver(selectedBook);
         } else {
             selectedBook.returnBook();
             System.out.println("도서를 반납했습니다.");
         }
     }
 
-    public void newBooks() {
+    private void processBorrowForReserver(Book selectedBook) {
+        User reserver = selectedBook.getReservedBy();
+        selectedBook.lendToReservation();
+        List<Book> reserverBookList = reserver.getBorrowedBookList();
+        reserverBookList.add(selectedBook);
+        System.out.println("도서를 반납했습니다. 예약자에게 자동으로 대출 됩니다.");
+    }
+
+    private void listNewBooks() {
         int month = Prompt.inputInt("월?");
         System.out.printf("[%d월 신간도서]\n", month);
         System.out.printf("번호%s분류%s도서명%s대출여부\n",
@@ -151,21 +131,9 @@ public class LibraryCommand extends AbstractCommand {
             Prompt.getSpaces(20, "도서명")
         );
 
-        int count = 0;
-        List<Book> searchList = new ArrayList<>();
-        for (Book book : bookList) {
-            if (book.getRegisteredDate().getMonthValue() == month) {
-                searchList.add(book);
-                System.out.printf("%d%s%s%s%s%s%s\n",
-                    book.getNo(), Prompt.getSpaces(8, String.valueOf(book.getNo())),
-                    book.getCategory(), Prompt.getSpaces(12, book.getCategory()),
-                    book.getName(), Prompt.getSpaces(20, book.getName()),
-                    book.isBorrowed() ? (book.isReserved() ? "예약중" : "대출중") : "대출가능");
-                count++;
-            }
-        }
+        List<Book> searchList = getSearchListByDate(month);
 
-        if (count == 0) {
+        if (searchList.isEmpty()) {
             System.out.println("검색 결과가 없습니다.");
             return;
         }
@@ -173,13 +141,7 @@ public class LibraryCommand extends AbstractCommand {
         int bookNo = Prompt.inputInt("도서 번호(0 이전)?");
         if (bookNo == 0) return;
 
-        Book selectedBook = null;
-        for (Book book : searchList) {
-            if (book.getNo() == bookNo) {
-                selectedBook = book;
-                break;
-            }
-        }
+        Book selectedBook = getSelectedBook(searchList, bookNo);
 
         if (selectedBook == null) {
             System.out.println("잘못된 도서 번호입니다.");
@@ -189,7 +151,54 @@ public class LibraryCommand extends AbstractCommand {
         borrowBook(selectedBook);
     }
 
-    public void borrowBook(Book selectedBook) {
+    private List<Book> getSearchListByTitle(String title) {
+        List<Book> searchList = new ArrayList<>();
+
+        for (Book book : bookList) {
+            if (book.getName().toLowerCase().contains(title)) {
+                searchList.add(book);
+                System.out.printf("%d%s%s%s%s%s%s\n",
+                    book.getNo(), Prompt.getSpaces(8, String.valueOf(book.getNo())),
+                    book.getCategory(), Prompt.getSpaces(12, book.getCategory()),
+                    book.getName(), Prompt.getSpaces(20, book.getName()),
+                    book.isBorrowed() ? (book.isReserved() ? "예약중" : "대출중") : "대출가능");
+            }
+        }
+
+        return searchList;
+    }
+
+    private List<Book> getSearchListByDate(int month) {
+        List<Book> searchList = new ArrayList<>();
+
+        for (Book book : bookList) {
+            if (book.getRegisteredDate().getMonthValue() == month) {
+                searchList.add(book);
+                System.out.printf("%d%s%s%s%s%s%s\n",
+                    book.getNo(), Prompt.getSpaces(8, String.valueOf(book.getNo())),
+                    book.getCategory(), Prompt.getSpaces(12, book.getCategory()),
+                    book.getName(), Prompt.getSpaces(20, book.getName()),
+                    book.isBorrowed() ? (book.isReserved() ? "예약중" : "대출중") : "대출가능");
+            }
+        }
+
+        return searchList;
+    }
+
+    private Book getSelectedBook(List<Book> searchList, int bookNo) {
+        Book selectedBook = null;
+
+        for (Book book : searchList) {
+            if (book.getNo() == bookNo) {
+                selectedBook = book;
+                break;
+            }
+        }
+
+        return selectedBook;
+    }
+
+    private void borrowBook(Book selectedBook) {
         List<Book> myBookList = currentUser.getBorrowedBookList();
 
         if (!selectedBook.isBorrowed()) {
@@ -240,7 +249,7 @@ public class LibraryCommand extends AbstractCommand {
         }
     }
 
-    public void listEntireBook() {
+    private void listEntireBook() {
         System.out.printf("번호%s분류%s도서명%s저자%s대출상태%s대출일%s반납예정일\n",
             Prompt.getSpaces(8, "번호"),
             Prompt.getSpaces(12, "분류"),
@@ -266,7 +275,7 @@ public class LibraryCommand extends AbstractCommand {
         }
     }
 
-    public void showGuide() {
+    private void showGuide() {
         String str =
                         "[이용 안내]\n" +
                                 "안녕하세요! \uD83D\uDE0A 대출관리시스템에 오신 것을 환영합니다!\n" +

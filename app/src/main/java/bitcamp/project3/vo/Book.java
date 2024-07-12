@@ -141,6 +141,20 @@ public class Book {
         this.reserved = false;
     }
 
+    public boolean hasReserbation() {
+        return this.reservedBy != null;
+    }
+
+    public void lendToReservation() {
+        if(this.reservedBy != null) {
+            this.borrowedBy =this.reservedBy;
+            this.borrowedDate = LocalDate.now();
+            this.reservedBy = null;
+            this.reserved = false;
+
+        }
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o)

@@ -122,10 +122,19 @@ public class LibraryCommand extends AbstractCommand {
             return;
         }
 
-        selectedBook.returnBook();
         myBookList.remove(selectedBook);
         currentUser.setBorrowedBookList(myBookList);
-        System.out.println("도서를 반납했습니다.");
+
+        if (selectedBook.hasReserbation()) {
+            User reserver = selectedBook.getReservedBy();
+            selectedBook.lendToReservation();
+            List<Book> reserverBookList = reserver.getBorrowedBookList();
+            reserverBookList.add(selectedBook);
+            System.out.println("도서를 반납했습니다. 예약자에게 자동으로 대출 됩니다.");
+        } else {
+            selectedBook.returnBook();
+            System.out.println("도서를 반납했습니다.");
+        }
     }
 
     public void newBooks() {
@@ -182,7 +191,6 @@ public class LibraryCommand extends AbstractCommand {
             selectedBook.setBorrowed(true);
             selectedBook.setBorrowedBy(currentUser);
             selectedBook.setBorrowedDate(LocalDate.now());
-
 
             myBookList.add(selectedBook);
             currentUser.setBorrowedBookList(myBookList);

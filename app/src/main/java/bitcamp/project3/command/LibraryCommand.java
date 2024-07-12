@@ -5,6 +5,7 @@ import bitcamp.project3.vo.Book;
 import bitcamp.project3.vo.User;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class LibraryCommand extends AbstractCommand {
@@ -31,18 +32,23 @@ public class LibraryCommand extends AbstractCommand {
         switch (menuName) {
             case "도서대출":
                 this.searchBook();
+                Prompt.loading(1000);
                 break;
             case "도서반납":
                 this.returnBook();
+                Prompt.loading(1000);
                 break;
             case "신간도서":
                 this.newBooks();
+                Prompt.loading(1000);
                 break;
             case "전체도서목록":
                 this.listEntireBook();
+                Prompt.loading(1000);
                 break;
             case "이용안내":
                 this.showGuide();
+                Prompt.loading(1000);
                 break;
         }
     }
@@ -54,9 +60,12 @@ public class LibraryCommand extends AbstractCommand {
             Prompt.getSpaces(12, "분류"),
             Prompt.getSpaces(20, "도서명")
         );
+
         int count = 0;
+        List<Book> searchList = new ArrayList<>();
         for (Book book : bookList) {
             if (book.getName().toLowerCase().contains(title)) {
+                searchList.add(book);
                 System.out.printf("%d%s%s%s%s%s%s\n",
                     book.getNo(), Prompt.getSpaces(8, String.valueOf(book.getNo())),
                     book.getCategory(), Prompt.getSpaces(12, book.getCategory()),
@@ -75,7 +84,7 @@ public class LibraryCommand extends AbstractCommand {
         if (bookNo == 0) return;
 
         Book selectedBook = null;
-        for (Book book : bookList) {
+        for (Book book : searchList) {
             if (book.getNo() == bookNo) {
                 selectedBook = book;
                 break;
@@ -165,16 +174,20 @@ public class LibraryCommand extends AbstractCommand {
     }
 
     public void borrowBook(Book selectedBook) {
+        List<Book> myBookList = currentUser.getBorrowedBookList();
+
         if (!selectedBook.isBorrowed()) {
             selectedBook.setBorrowed(true);
             selectedBook.setBorrowedBy(currentUser);
             selectedBook.setBorrowedDate(LocalDate.now());
 
-            List<Book> myBookList = currentUser.getBorrowedBookList();
+
             myBookList.add(selectedBook);
             currentUser.setBorrowedBookList(myBookList);
 
             System.out.println("대출되었습니다.");
+        } else if(myBookList.contains(selectedBook)) {
+            System.out.println("이미 대출한 도서입니다.");
         } else if (selectedBook.isReserved()) {
             System.out.println("이미 예약중인 도서입니다. 현재는 예약이 불가합니다.");
         } else {

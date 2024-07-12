@@ -100,14 +100,20 @@ public class LibraryCommand extends AbstractCommand {
             return;
         }
 
-        Book selectedBook = new Book(bookNo);
-        if (!myBookList.contains(selectedBook)) {
+        Book selectedBook = null;
+        for (Book book : bookList) {
+            if (book.getNo() == bookNo) {
+                selectedBook = book;
+                break;
+            }
+        }
+
+        if (selectedBook == null || !myBookList.contains(selectedBook)) {
             System.out.println("해당 도서는 대출 중이 아닙니다.");
             return;
         }
 
-        selectedBook.setBorrowed(false);
-        selectedBook.setBorrowedDate(null);
+        selectedBook.returnBook();
         myBookList.remove(selectedBook);
         currentUser.setBorrowedBookList(myBookList);
         System.out.println("도서를 반납했습니다.");
@@ -170,7 +176,7 @@ public class LibraryCommand extends AbstractCommand {
 
             System.out.println("대출되었습니다.");
         } else if (selectedBook.isReserved()) {
-            System.out.println("예약중인 도서입니다. 대출이 불가합니다.");
+            System.out.println("이미 예약중인 도서입니다. 현재는 예약이 불가합니다.");
         } else {
             System.out.println("대출 중인 도서입니다. 예약하시겠습니까? (y/n)");
             String answer = Prompt.input("선택 (y/n)");

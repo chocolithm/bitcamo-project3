@@ -102,6 +102,11 @@ public class LibraryCommand extends AbstractCommand {
     private void returnBook() {
         List<Book> myBookList = currentUser.getBorrowedBookList();
 
+        if(myBookList.isEmpty()) {
+            System.out.println("대출한 도서가 없습니다.");
+            return;
+        }
+
         listMyBook(myBookList);
 
         int bookNo = Prompt.inputInt("반납할 도서 번호(0 이전)?");

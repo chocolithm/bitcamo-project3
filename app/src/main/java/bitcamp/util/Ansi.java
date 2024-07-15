@@ -1,4 +1,4 @@
-package bitcamp.project3.util;
+package bitcamp.util;
 
 public class Ansi {
   public static final String RESET = "\033[0m";

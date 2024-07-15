@@ -1,4 +1,4 @@
-package bitcamp.project3.util;
+package bitcamp.login;
 
 public class Login {
   private String id;
@@ -45,6 +45,6 @@ public class Login {
   }
 
   public boolean isLoggedIn() {
-    return name != null && !name.isEmpty();
+    return loginUser != null;
   }
 }

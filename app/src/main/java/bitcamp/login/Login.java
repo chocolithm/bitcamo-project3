@@ -17,7 +17,12 @@ public class Login {
   }
 
   public static void freeInstance() {
-    loginUser = null;
+    if (loginUser != null) {
+      loginUser.id = null;
+      loginUser.name = null;
+      loginUser.isAdmin = false;
+    }
+//    loginUser = null;
   }
 
   public String getId() {

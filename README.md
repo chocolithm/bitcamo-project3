@@ -21,14 +21,11 @@
 
 
 ### 목차
-<pre>
-<a href="#1" style="text-decoration: none;">1. 시작 가이드</a>
-<a href="#2" style="text-decoration: none;">2. 기술 스택</a>
-<a href="#3" style="text-decoration: none;">3. 프로젝트 구조</a>
-<a href="#4" style="text-decoration: none;">4. 주요 기능</a>
-<a href="#5" style="text-decoration: none;">5. 화면 구성 및 기능</a>
-</pre>
-
+[1. 시작 가이드](#1-시작-가이드)
+[2. 기술 스택](#2-기술-스택)
+[3. 프로젝트 구조](#3-프로젝트-구조)
+[4. 주요 기능](#4-주요-기능)
+[5. 화면 구성 및 기능](#5-화면-구성-및-기능)
 
 <!-- 
   프로젝트 로고, 배포 주소
@@ -37,7 +34,7 @@ https://velog.io/@luna7182/%EB%B0%B1%EC%97%94%EB%93%9C-%ED%94%84%EB%A1%9C%EC%A0%
 
 
 <br><br>
-# 1. 시작 가이드 <span id="1"></span>
+# 1. 시작 가이드
 
 ### Requirements
 - JDK 21
@@ -58,7 +55,7 @@ $ java -cp app/bin/main bitcamp.project3.App
 
 
 <br><br>
-# 2. 기술 스택 <span id="2"></span>
+# 2. 기술 스택
 <!-- https://github.com/Ileriayo/markdown-badges?tab=readme-ov-file#badges -->
 
 ### Environment
@@ -77,7 +74,7 @@ $ java -cp app/bin/main bitcamp.project3.App
 <!-- 채택한 개발 기술과 브랜치 전략 -->
 
 <br><br>
-# 3. 프로젝트 구조 <span id="3"></span>
+# 3. 프로젝트 구조
 <pre>
 📦src
  ┣ 📂main
@@ -131,7 +128,7 @@ $ java -cp app/bin/main bitcamp.project3.App
 </pre>
 
 <br><br>
-# 4. 주요 기능 <span id="4"></span>
+# 4. 주요 기능
 
 ### 도서관 이용
 - 도서 검색 및 대출, 반납
@@ -143,42 +140,40 @@ $ java -cp app/bin/main bitcamp.project3.App
 
 
 <br><br>
-# 5. 화면 구성 및 기능 <span id="5"></span>
+# 5. 화면 구성 및 기능
 
-<pre>
-<a href="#join">회원가입</a>
-<a href="#login">로그인</a>
-<a href="#userMain">사용자 메인</a>
-  <a href="#userMainBorrow">도서대출</a>
-  <a href="#userMainReturn">도서반납</a>
-  <a href="#userMainNewBook">신간도서</a>
-  <a href="#userMainEntireBook">전체도서목록</a>
-  <a href="#userMainGuide">이용안내</a>
-<a href="#adminMain">관리자 메인</a>
-  <a href="#adminMainUser">사용자관리</a>
-  <a href="#adminMainBook">도서관리</a>
-</pre>
+[회원가입](#회원가입)
+[로그인](#로그인)
+[사용자 메인](#사용자-메인)
+[도서대출](#사용자-메인--도서대출)
+[도서반납](#사용자-메인--도서반납)
+[신간도서](#사용자-메인--신간도서)
+[전체도서목록](#사용자-메인--전체도서목록)
+[이용안내](#사용자-메인--이용안내)
+[관리자 메인](#관리자-메인)
+[사용자관리](#관리자-메인--사용자관리)
+[도서관리](#관리자-메인--도서관리)
 
-### 회원가입 <span id="join"></span>
+### 회원가입
 - ID 입력 시 중복 검사가 진행되고, 중복일 경우 경고 문구를 출력합니다.
 - 중복 검사를 통과할 경우 비밀번호 및 이름을 입력받은 후 가입을 완료합니다.
 
 <img src="README_images/join.png" alt="회원가입">
 
-### 로그인 <span id="login"></span>
+### 로그인
 - ID와 PW를 입력받은 후, 일치하는 사용자가 없으면 경고 문구를 출력합니다.
 - 일치하는 사용자가 있으면 관리자 여부에 따라 관리자/사용자 메인으로 이동합니다.
 
 <img src="README_images/login_fail.png" alt="로그인 실패">
 <img src="README_images/login_success.png" alt="로그인 성공">
 
-### 사용자 메인 <span id="userMain"></span>
+### 사용자 메인
 - 연체 중인 도서가 있을 경우, 메인화면 상단에 도서명과 연체 일자를 출력합니다.
 - 번호를 통해 도서대출, 도서반납, 신간도서, 전체도서목록, 이용안내 메뉴로 이동할 수 있습니다.
 
 <img src="README_images/main_user.png" alt="사용자 메인">
 
-### 사용자 메인 > 도서대출 <span id="userMainBorrow"></span>
+### 사용자 메인 > 도서대출
 - 도서 제목을 검색한 후, 대출하고자 하는 도서의 번호를 선택합니다.
 - 대출가능 상태의 도서는 즉시 대출됩니다.
 - 대출중인 도서는 예약 여부를 확인한 후, 희망할 시 예약 처리합니다.
@@ -186,36 +181,36 @@ $ java -cp app/bin/main bitcamp.project3.App
 <img src="README_images/library_borrow.png" alt="사용자 메인 > 도서대출">
 <img src="README_images/library_reserve.png" alt="사용자 메인 > 도서대출 (예약)">
 
-### 사용자 메인 > 도서반납 <span id="userMainReturn"></span>
+### 사용자 메인 > 도서반납
 - 현재 대출 중인 목록을 출력합니다.
 - 반납할 도서 번호를 입력받아 반납 처리합니다.
 - 예약된 도서일 경우, 예약자에게 즉시 대출 처리됩니다.
 
 <img src="README_images/library_return.png" alt="사용자 메인 > 도서반납">
 
-### 사용자 메인 > 신간도서 <span id="userMainNewBook"></span>
+### 사용자 메인 > 신간도서
 - 특정 월을 입력받아 해당 월에 등록된 도서 목록을 출력합니다.
 - 검색된 도서를 바로 대출할 수 있습니다.
 
 <img src="README_images/library_newBook.png" alt="사용자 메인 > 신간도서">
 
-### 사용자 메인 > 전체도서목록 <span id="userMainEntireBook"></span>
+### 사용자 메인 > 전체도서목록
 - 현재 등록된 전체 도서 목록을 출력합니다.
 
 <img src="README_images/library_entireBook.png" alt="사용자 메인 > 전체도서목록">
 
-### 사용자 메인 > 이용안내 <span id="userMainGuide"></span>
+### 사용자 메인 > 이용안내
 
 <img src="README_images/library_guide.png" alt="사용자 메인 > 이용안내">
 
-### 관리자 메인 <span id="adminMain"></span>
+### 관리자 메인
 - 현재 도서관에 등록된 전체 사용자 수와 도서 수를 출력합니다.
 - 번호를 통해 사용자관리, 도서관리 메뉴로 이동할 수 있습니다.
 
 <img src="README_images/main_admin.png" alt="관리자 메인">
 
 
-### 관리자 메인 > 사용자관리 <span id="adminMainUser"></span>
+### 관리자 메인 > 사용자관리
 - 번호를 통해 목록, 수정, 삭제 메뉴로 이동할 수 있습니다.
 
 <img src="README_images/user.png" alt="관리자 메인 > 사용자관리">
@@ -242,7 +237,7 @@ $ java -cp app/bin/main bitcamp.project3.App
 <img src="README_images/user_delete_self.png" alt="관리자 메인 > 사용자관리 > 삭제 (본인)">
 <img src="README_images/user_delete_isBorrowed.png" alt="관리자 메인 > 사용자관리 > 삭제 (대출 중 사용자)">
 
-### 관리자 메인 > 도서관리 <span id="adminMainBook"></span>
+### 관리자 메인 > 도서관리
 - 번호를 통해 등록, 목록, 수정, 삭제 메뉴로 이동할 수 있습니다.
 
 <img src="README_images/book.png" alt="관리자 메인 > 도서관리">

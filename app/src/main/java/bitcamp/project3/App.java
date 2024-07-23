@@ -76,11 +76,11 @@ public class App {
 
         private void addDummyUser() {
             User user;
-            user = new User("root", "0000", "엄진영", true, LocalDate.now(), new ArrayList<>());
+            user = new User("root", "0000", "엄진영", true, LocalDate.of(2024, 5, 24), new ArrayList<>());
             userList.add(user);
-            user = new User("test", "0000", "백현기", false, LocalDate.now(), new ArrayList<>());
+            user = new User("test", "0000", "백현기", false, LocalDate.of(2024, 6, 19), new ArrayList<>());
             userList.add(user);
-            user = new User("test2", "0000", "강윤상", false, LocalDate.now(), new ArrayList<>());
+            user = new User("test2", "0000", "강윤상", false, LocalDate.of(2024, 6, 24), new ArrayList<>());
             userList.add(user);
         }
 

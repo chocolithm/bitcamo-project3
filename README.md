@@ -19,24 +19,14 @@
   - UserCommand, LibraryCommand 기능 구현
   - Menu에 Composite Pattern, Command에 Command Pattern 적용
 
-<style>
-  a {
-  text-decoration : none;
-}
-
-  a:hover {
-  opacity: 0.5;
-  transition: 0.5s;
-}
-</style>
 
 ### 목차
 <pre>
-<a href="#1">1. 시작 가이드</a>
-<a href="#2">2. 기술 스택</a>
-<a href="#3">3. 프로젝트 구조</a>
-<a href="#4">4. 주요 기능</a>
-<a href="#5">5. 화면 구성 및 기능</a>
+<a href="#1" style="text-decoration: none;">1. 시작 가이드</a>
+<a href="#2" style="text-decoration: none;">2. 기술 스택</a>
+<a href="#3" style="text-decoration: none;">3. 프로젝트 구조</a>
+<a href="#4" style="text-decoration: none;">4. 주요 기능</a>
+<a href="#5" style="text-decoration: none;">5. 화면 구성 및 기능</a>
 </pre>
 
 
